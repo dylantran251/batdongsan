@@ -90,7 +90,7 @@ export function getProvincesAPI(){
             let data = response.data;
             let option = '<option value="" selected disabled>Tỉnh/Thành phố</option>';
             data.forEach(function(item) {
-                option += `<option value="${item.id}">${item.name}</option>`
+                option += `<option value="${item.id}">${item.full_name}</option>`
             });
             $('#provinces').html(option)
             selectedProvince()
@@ -107,10 +107,12 @@ function getDistrictsAPI(province_id){
     $.ajax({
         url: '/districts/'+province_id,
         type: 'GET',
-        success: function(data){
+        success: function(response){
+            console.log(response.data + 'abbcbcvcvcv');
+            let data = response.data;
             let option = '<option value="" selected disabled>Quận/Huyện</option>';
             data.forEach(item => {
-                option += `<option value="${item.id}">${item.name}</option>`
+                option += `<option value="${item.id}">${item.full_name}</option>`
             });
             $('#districts').html(option)
             selecteDistrict()
@@ -124,13 +126,12 @@ function getWardsAPI(district_id){
     $.ajax({
         url: '/wards/' + district_id ,
         type: 'GET',
-        success: function(data){
+        success: function(response){
             let option = '<option value="" selected disabled>Xã/Phường</option>';
-            if(data.length > 0){
-                data.forEach(item => {
-                    option += `<option value="${item.id}">${item.name}</option>`
-                });
-            }
+            let data = response.data;
+            data.forEach(item => {
+                option += `<option value="${item.id}">${item.full_name}</option>`
+            });
             $('#wards').html(option) 
             selectedWard()
         },

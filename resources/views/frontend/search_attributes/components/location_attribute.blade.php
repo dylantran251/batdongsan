@@ -1,24 +1,22 @@
 <div class="relative flex flex-col w-full ">
     <div class="inline-block text-left">
-        <div>
-            <button onclick="isActiveDropdown('dropdownContentLocation')" type="button" 
-            class="flex  {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white p-3' : 'flex-col justify-start text-sm border-r text-black px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-100 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-                <span class="flex justify-between items-center w-full">
-                    <span class="line-clamp-1 {{ ($style == 0) ? 'show-location' : '' }}" >
-                        {{ ($style == 0) ? 'Trên toàn quốc' : 'Khu vực & dự án'}}
-                    </span>
-                    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M18 9L12 15L6 9" stroke="#828282" stroke-linecap="round"/>
-                    </svg>
+        <button type="button" 
+        class="dropdown-toggle flex  {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white p-3' : 'flex-col justify-start text-sm border-r text-black px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-100 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+            <span class="flex justify-between items-center w-full">
+                <span class="line-clamp-1 {{ ($style == 0) ? 'show-location' : '' }}" >
+                    {{ ($style == 0) ? 'Trên toàn quốc' : 'Khu vực & dự án'}}
                 </span>
-                @if($style != 0)
-                    <span class="show-location line-clamp-1 text-start text-base">
-                        {{ ( request('location') ? request('location') : 'Tất cả' ) }}
-                    </span>
-                @endif
-            </button>      
-        </div>
-        <div id="dropdownContentLocation" class="hidden {{ $style === 0 ? 'mt-2' : 'mt-4' }} w-80 absolute z-[99] bg-white rounded-lg shadow-lg">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M18 9L12 15L6 9" stroke="#828282" stroke-linecap="round"/>
+                </svg>
+            </span>
+            @if($style != 0)
+                <span class="show-location line-clamp-1 text-start text-base">
+                    {{ ( request('location') ? request('location') : 'Tất cả' ) }}
+                </span>
+            @endif
+        </button>      
+        <div  class="dropdown-box hidden {{ $style === 0 ? 'mt-2' : 'mt-4' }} w-80 absolute z-[99] bg-white rounded-lg shadow-lg">
             <div class="p-4 flex flex-col gap-4 text-base">
                 <select id="provinces" 
                 class="w-full px-6 py-3 rounded border bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"  >

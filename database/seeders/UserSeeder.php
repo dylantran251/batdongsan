@@ -20,7 +20,6 @@ class UserSeeder extends Seeder
             User::truncate();
         }
         $avatar_name = [
-            '1701317747150.jpg',
             '1701317747327.jpg',
             '1701317747431.jpg',
             '1701317747458.jpg',

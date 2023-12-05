@@ -8,8 +8,7 @@ use App\Models\District;
 use App\Models\Province;
 use App\Models\Ward;
 use Exception;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Http;
+use Illuminate\Http\Request; 
 use Illuminate\Support\Facades\Response;
 
 class LocationController extends Controller
@@ -18,47 +17,31 @@ class LocationController extends Controller
     public function getProvincesData(){
         try{
             $provinces = Province::all();
-            if($provinces->count() < 0){
-                $response = Http::get('https://provinces.open-api.vn/api/?depth=1');
-                $provinces = $response->json();
-            };
             return Response::json(['data' => $provinces], 200);
         }
         catch(Exception $e){
-            Response::json(['message' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
+            return Response::json(['message' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
     }
 
     public function getDistrictsData($province_id){
         try{
             $districts = District::where('province_id', $province_id)->get();
-            if($districts->count() === 0){
-                $host = 'https://provinces.open-api.vn/api/';
-                $response = Http::get($host. "p/$province_id?depth=2");
-                $districts = $response->json();
-                return $districts;
-            }else{
-                return Response::json($districts);
-            }
-        }catch(Exception $exception){
-            Response::json([]);
+            return Response::json(['data' => $districts], 200);
+        }catch(Exception $e){
+            return Response::json(['message' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
     }
+
     public function getWardsData($district_id){
         try{
             $wards = Ward::where('district_id', $district_id)->get();
-            if($wards === 0){
-                $host = 'https://provinces.open-api.vn/api/';
-                $response = Http::get($host. "d/$district_id?depth=2");
-                $wards = $response->json();
-                return $wards;
-            }else{
-                return Response::json($wards);
-            }
-        }catch(Exception $exception){
-            Response::json([]);
+            return Response::json(['data' => $wards], 200);
+        }catch(Exception $e){
+            Response::json(['message' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
     }
+
     // Show name province and quantity posts by this in page menu and  post detail
     public function dataPostsByProvince($category_id, $real_estate_type){
         $twelve_provinces = Province::orderBy('id')->limit(12)->get();
@@ -69,14 +52,13 @@ class LocationController extends Controller
             : $province->posts()->where('type', 1)->where('category_id', $category_id)->count() ;
             $data[] = [
                 'province_id' => $province->id, 
-                'province_name' => $province->getShortenProvinceNameAttribute(), 
-                'province_full_name' => $province->name,
+                'province_name' => $province->name, 
+                'province_full_name' => $province->full_name,
                 'quantity_posts' => $quantity_posts,
             ];
         }
         return $data;
     }
-
 
     public function loadMoreProvinces(Request $request){
         try{
@@ -89,8 +71,8 @@ class LocationController extends Controller
                 : $province->posts()->where('type', 1)->where('category_id', $data['category_id'])->count() ;
                 $dataPostsByProvince[] = [
                     'province_id' => $province->id, 
-                    'province_full_name' => $province->name,
-                    'province_name' => $province->getShortenProvinceNameAttribute(),
+                    'province_full_name' => $province->full_name,
+                    'province_name' => $province->name,
                     'quantity_posts' => $quantity_posts,
                     'real_estate_type' => $data['real_estate_type'],
                 ];
@@ -102,7 +84,6 @@ class LocationController extends Controller
     }
 
     // Show name ward and quantity posts and price/m2 avg by this in post detail page
-
     public function dataPostsByWard($category_id, $district_id, $real_estate_type){
         $wards = Ward::where('district_id', $district_id)->get();
         $dataPostByWard = [];

@@ -1,4 +1,6 @@
-@foreach($item['sliderPosts'] as $post)
+
+@forelse ( $item['sliderPosts'] as $post )
+
     <li class="splide__slide mx-5 p-0 w-full flex flex-col shadow-lg rounded-lg border">
         <div class="w-full">
             <img src="{{ (($post->getAvatar(0)) != '') ? asset('uploads/'.$post->getAvatar(0)) : asset('dist/images/preview-1.jpg') }}" class="rounded-t-lg h-[250px] object-cover w-full" alt="">
@@ -40,6 +42,8 @@
             </a>
         </div>
     </li>
-@endforeach
+@empty
+
+@endforelse
 
 

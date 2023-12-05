@@ -1,8 +1,8 @@
 <div class="flex flex-col w-full">
     <div class="relative inline-block text-left">
-        <div class="">
-            <button onclick="isActiveDropdown('dropdownContentPrice')" type="button" 
-            class="flex  {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white p-3' : 'flex-col justify-start text-sm border-r px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-100 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+
+            <button type="button" 
+            class="dropdown-toggle flex {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white p-3' : 'flex-col justify-start text-sm border-r px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-100 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                 <span class="flex justify-between items-center w-full">
                     <span class="flex items-center whitespace-nowrap {{ ($style == 0) ? 'show-price-range' : '' }}">
                         Mức giá
@@ -17,8 +17,7 @@
                     </span>
                 @endif
             </button>
-        </div>
-        <div id="dropdownContentPrice" class="hidden w-80 {{ $style === 0 ? 'mt-2' : 'mt-4' }} absolute z-[1000] bg-white rounded-lg shadow-lg">
+        <div class="dropdown-box hidden w-80 {{ $style === 0 ? 'mt-2' : 'mt-4' }} absolute z-[1000] bg-white rounded-lg shadow-lg">
             <div class="">
                 <div class="flex flex-col gap-5 text-base">
                     <div class="h-80 overflow-y-auto">

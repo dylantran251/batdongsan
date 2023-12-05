@@ -8,6 +8,7 @@ use App\Models\Province;
 use App\Models\Ward;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\File;
 
 class LocationSeeder extends Seeder
 {
@@ -16,29 +17,39 @@ class LocationSeeder extends Seeder
      */
     public function run(): void
     {
-        $location = new LocationController();
-        $data = json_decode($location->getProvincesData()); 
-        $count = 0;
-        foreach ($data as $item) {
-            $province = Province::create([
-                'name' => $item['name'],
-                'code' => $item['code'],
+        $json_path_provinces = public_path('json/provinces.json');
+        $json_provinces = File::get($json_path_provinces);
+        $provinces = json_decode($json_provinces);
+        foreach($provinces as $province){
+            Province::create([
+                'id' => $province->code,
+                'full_name' => $province->name,
+                'name' => str_replace(['Thành phố ', 'Tỉnh '], '', $province->name),
             ]);
-            $districts = $location->getDistrictsData($item['code']);
-            foreach ($districts['districts'] as $item1) {
-                $district = $province->districts()->create([
-                    'name' => $item1['name'],
-                ]);
-                dump($item1, 'Quận huyện');
-                $wards = $location->getWardsData($item1['code']);
-                foreach($wards['wards'] as $item2){
-                    $district->wards()->create([
-                        'name' => $item2['name'],
-                    ]);
-                    dump($item2['name']);
-                }
-            }
-            echo $count++;
+        }
+
+        $json_path_districts = public_path('json/districts.json');
+        $json_districts = File::get($json_path_districts);
+        $districts = json_decode($json_districts);
+        foreach($districts as $district){
+            District::create([
+                'id' => $district->code,
+                'province_id' => $district->province_code, 
+                'full_name' => $district->name,
+                'name' => str_replace(['Quận ', 'Huyện ', 'Thị xã ', 'Thành phố '], '', $district->name),
+            ]);
+        }
+
+        $json_path_wards = public_path('json/wards.json');
+        $json_wards = File::get($json_path_wards);
+        $wards = json_decode($json_wards);
+        foreach($wards as $ward){
+            Ward::create([
+                'id' => $ward->code,
+                'district_id' => $ward->district_code, 
+                'full_name' => $ward->name,
+                'name' => str_replace(['Xã ', 'Phường ', 'Thị trấn '], '', $ward->name),
+            ]);
         }
     }
 }

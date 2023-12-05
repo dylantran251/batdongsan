@@ -1,25 +1,24 @@
 
 <div class=" flex flex-col w-full ">
     <div class="relative inline-block text-left">
-        <div>
-            <button onclick="isActiveDropdown('dropdownContentArea')"  type="button" 
-            class="flex  {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white p-3' : 'flex-col justify-start text-sm border-r text-gray-900 px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-50 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
-            <span class="block flex justify-between items-center w-full">
-                <span class="flex items-center whitespace-nowrap {{ ($style == 0) ? 'show-area-range' : '' }}">
-                    Diện tích
-                </span>
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 9L12 15L6 9" stroke="#828282" stroke-linecap="round"/>
-                </svg>
+        <button  type="button" 
+        class="dropdown-toggle flex  {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white p-3' : 'flex-col justify-start text-sm border-r text-gray-900 px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-50 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+        <span class="block flex justify-between items-center w-full">
+            <span class="flex items-center whitespace-nowrap {{ ($style == 0) ? 'show-area-range' : '' }}">
+                Diện tích
             </span>
-                @if($style != 0)
-                    <span class="show-area-range overflow-hidden line-clamp-1 text-base">
-                        {{ (request('area-range')) ? request('area-range') : 'Tất cả' }}
-                    </span>
-                @endif
-            </button>
-        </div>
-        <div id="dropdownContentArea" class="hidden w-80 {{ $style === 0 ? 'mt-2' : 'mt-4' }} absolute z-10 bg-white rounded-lg shadow-lg shadow-lg ">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 9L12 15L6 9" stroke="#828282" stroke-linecap="round"/>
+            </svg>
+        </span>
+            @if($style != 0)
+                <span class="show-area-range overflow-hidden line-clamp-1 text-base">
+                    {{ (request('area-range')) ? request('area-range') : 'Tất cả' }}
+                </span>
+            @endif
+        </button>
+
+        <div class="dropdown-box hidden w-80 {{ $style === 0 ? 'mt-2' : 'mt-4' }} absolute z-10 bg-white rounded-lg shadow-lg shadow-lg ">
             <div class="flex flex-col gap-5 text-base">
                 <div class="h-80 overflow-y-auto">
                     <ul class="my-4">

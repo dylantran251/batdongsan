@@ -25,9 +25,4 @@ class Province extends Model
         return $this->hasMany(Post::class);
     }
 
-    public function getShortenProvinceNameAttribute(){
-        $province = str_replace(['Thành phố ', 'Tỉnh '], '', $this->name);
-        return $province;
-    }
-
 }

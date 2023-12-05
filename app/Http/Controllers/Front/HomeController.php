@@ -35,8 +35,9 @@ class HomeController extends Controller
         $nextNews = $news->skip(1)->take(3);
         foreach($categoryPosts as $category){
             $posts = $category->posts()->where('type', 1)->orderByDesc('created_at')->get();
-
             $postsCount = $posts->count();
+            $sliderPosts = [];
+            $listPosts = [];
             if($postsCount>13){
                 $sliderPosts = $posts->take(8);
                 $listPosts = $posts->skip(8)->take(5);

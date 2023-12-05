@@ -119,8 +119,7 @@ class PostController extends Controller
             $isCheckWardData = !empty($remainingWardData) ? true : false;
             // Posts related
             $realEstateForYou = Post::where('type', 1)->where('category_id', $post->category_id)->where('id', '!=', $post->id)->limit(8)->get();
-            $postsViewed = Post::where('type', 1)->inRandomOrder()->limit(8)->get();
-            $this->addToViewed($post);
+            $postsViewed = $this->addToViewed($post);
             return view('frontend.pages.posts.details.index', compact('post', 'countPostByUser', 'title', 'allWarData', 'firstEightWardData', 'dataPostsByProvince', 'menus', 'categoryPosts', 'dataKeywordByCategory', 'realEstateForYou', 'realEstateTypes', 'isCheckWardData', 'postsViewed'));
         }catch(Exception $e){
             toastr()->error('Lỗi', 'Có lỗi xảy ra');
@@ -316,6 +315,7 @@ class PostController extends Controller
     }
 
     protected function addToViewed($post){
+        $postsViewed = Post::where('type', 1)->inRandomOrder()->limit(8)->get();
         if (Auth::check()) {
             $user = Auth::user();
             $hasViewedPost = $user->viewedPosts()->where('post_id', $post->id)->exists();
@@ -324,6 +324,7 @@ class PostController extends Controller
                 $user->viewedPosts()->attach($post->id);
             }
         }
+        return $postsViewed;
     }
 
     // News

@@ -63,9 +63,9 @@ class PostSeeder extends Seeder
         ];
         
         foreach (range(1, 500) as $index) {
-            $province_id = $faker->numberBetween(1, 63);
+            $provinces = Province::all();
+            $province_id = $faker->randomElement($provinces->pluck('id')->toArray());
             $province = Province::where('id', $province_id)->first();
-            $province_name = str_replace(['Tỉnh ', 'Thành phố '], '', $province->name);
             $districts = District::where('province_id', $province_id)->get();
             $district_id = $faker->randomElement($districts->pluck('id')->toArray());
             $wards = Ward::where('district_id', $district_id)->get();
@@ -93,7 +93,7 @@ class PostSeeder extends Seeder
                 $real_estate_type = $real_estate_types->where('id', $real_estate_type_id)->first();
                 $keyword_name = $keyword_name.' '.$real_estate_type->name ; 
                 $randImages = $faker->randomElements($images, 5);
-                $keyword_name = ucfirst(strtolower($keyword_name)) .' '. $province_name;
+                $keyword_name = ucfirst(strtolower($keyword_name)) .' '. $province->name;
                 $keyword = Keyword::create([
                     'name' => $keyword_name
                 ]);

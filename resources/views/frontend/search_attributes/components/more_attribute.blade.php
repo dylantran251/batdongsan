@@ -1,28 +1,26 @@
 <div class="w-full relative">
-    <div>
-        <button onclick="isActiveDropdown('dropdownContentMoreAttribute')" type="button" 
-        class="flex justify-between {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white focus:outline-none hover:bg-gray-100 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700' : 'flex-col justify-start text-sm ' }} z-[0] w-full p-3 hover:bg-gray-300 hover:text-white focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
-            @if($style == 0)    
-                Lọc thêm
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M18 9L12 15L6 9" stroke="#828282" stroke-linecap="round"/>
-                </svg>
-            @else
-                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M5 12L5 4" stroke="#333333" stroke-linecap="round"/>
-                    <path d="M19 20L19 17" stroke="#333333" stroke-linecap="round"/>
-                    <path d="M5 20L5 16" stroke="#333333" stroke-linecap="round"/>
-                    <path d="M19 13L19 4" stroke="#333333" stroke-linecap="round"/>
-                    <path d="M12 7L12 4" stroke="#333333" stroke-linecap="round"/>
-                    <path d="M12 20L12 11" stroke="#333333" stroke-linecap="round"/>
-                    <circle cx="5" cy="14" r="2" stroke="#333333" stroke-linecap="round"/>
-                    <circle cx="12" cy="9" r="2" stroke="#333333" stroke-linecap="round"/>
-                    <circle cx="19" cy="15" r="2" stroke="#333333" stroke-linecap="round"/>
-                </svg>
-            @endif
-        </button>
-    </div>
-    <div id="dropdownContentMoreAttribute" class="hidden w-[400px] {{ $style === 0 ? 'mt-2' : 'mt-4' }} absolute right-0 z-10 text-base text-black bg-white rounded-lg shadow-lg shadow-lg">
+    <button  type="button" 
+    class="dropdown-toggle flex justify-between {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white w-full focus:outline-none hover:bg-gray-100 hover:text-gray-900 ' : 'flex-col justify-start text-sm ' }} z-[0] w-full p-3  text-center inline-flex items-center dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:focus:ring-blue-800 dark:hover:bg-blue-500">
+        @if($style == 0)    
+            Lọc thêm
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M18 9L12 15L6 9" stroke="#828282" stroke-linecap="round"/>
+            </svg>
+        @else
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M5 12L5 4" stroke="#333333" stroke-linecap="round"/>
+                <path d="M19 20L19 17" stroke="#333333" stroke-linecap="round"/>
+                <path d="M5 20L5 16" stroke="#333333" stroke-linecap="round"/>
+                <path d="M19 13L19 4" stroke="#333333" stroke-linecap="round"/>
+                <path d="M12 7L12 4" stroke="#333333" stroke-linecap="round"/>
+                <path d="M12 20L12 11" stroke="#333333" stroke-linecap="round"/>
+                <circle cx="5" cy="14" r="2" stroke="#333333" stroke-linecap="round"/>
+                <circle cx="12" cy="9" r="2" stroke="#333333" stroke-linecap="round"/>
+                <circle cx="19" cy="15" r="2" stroke="#333333" stroke-linecap="round"/>
+            </svg>
+        @endif
+    </button>
+    <div class="dropdown-box hidden w-[400px] {{ $style === 0 ? 'mt-2' : 'mt-4' }} absolute right-0 z-10 text-base text-black bg-white rounded-lg shadow-lg shadow-lg">
         <div class="p-4">
             <div class="flex flex-col gap-3 mb-5">
                 <h3 class="text-base">Số phòng ngủ</h3>

@@ -88,53 +88,6 @@ function showPhoneNumber(){
     })
 }
 
-
-
-function onClickPostDetailsLink(){
-    let isExistsInput = () => {
-        let data = {};
-        if($('input[name="location"]').length > 0 ){
-            data['location'] = $('input[name="location"]').val();
-        } 
-        if($('.item-checkbox:checked').length > 0 ){
-            data['real_estate_types'] = [];
-            $('.item-checkbox:checked').each(function(){
-                data['real_estate_types'].push($(this).val())
-            })
-        }
-        if($('input[name="keyword"]').val() !== '' ){
-            data['keyword'] = $('input[name="keyword"]').val();
-        }
-        if($('input[name="price-range"]').length > 0 ){
-            data['price-range'] = $('input[name="price-range"]').val();
-        }
-        if($('input[name="area-range"]').length > 0 ){
-            data['area-range'] = $('input[name="area-range"]').val();
-        }
-        if($('input[name="toilet[]"]').length > 0 ){
-            data['toilet'] = [];
-            $('input[name="toilet[]"]').each(function(){
-                data['toilet'].push($(this).val())
-            })
-        }
-        if($('input[name="bedroom[]"]').length > 0 ){
-            data['bedroom'] = [];
-            $('input[name="bedroom[]"]').each(function(){
-                data['bedroom'].push($(this).val())
-            })
-        }
-        if($('input[name="home-direction[]"]').length > 0 ){
-            data['bedroom'] = [];
-            $('input[name="bedroom[]"]').each(function(){
-                data['bedroom'].push($(this).val())
-            })
-        }
-        return data;
-    }
-    $('#page .link-post-details').on('click', function(e){
-    })
-}
-
 function loadMoreWardsData(){
     $('#post-details .load-more-wards').on('click', function(e){
         e.preventDefault();
@@ -213,9 +166,20 @@ function onAddPostToFavorite(){
     })
 }
 
+function onToggleDropdown(){
+    $('.dropdown-toggle').on('click', function(e) {
+        e.preventDefault();
+        let dropdown = $(this).next('.dropdown-box');
+        $('.dropdown-box').not(dropdown).addClass('hidden');
+        // Hiển thị hoặc ẩn dropdown
+        dropdown.toggleClass('hidden');
+    });
+}
+
 $(document).ready(function(){
     loadMoreProvinces()
     loadMoreWardsData()
     showPhoneNumber()
     onAddPostToFavorite()
+    onToggleDropdown()
 })
