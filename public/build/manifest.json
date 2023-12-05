@@ -1,0 +1,54 @@
+{
+  "_dropzone-e0856a71.js": {
+    "css": [
+      "assets/dropzone-d5b9b975.css"
+    ],
+    "file": "assets/dropzone-e0856a71.js"
+  },
+  "dropzone.css": {
+    "file": "assets/dropzone-d5b9b975.css",
+    "src": "dropzone.css"
+  },
+  "resources/css/app.css": {
+    "file": "assets/app-179954eb.css",
+    "isEntry": true,
+    "src": "resources/css/app.css"
+  },
+  "resources/dist/css/_app.css": {
+    "file": "assets/_app-886d3be4.css",
+    "isEntry": true,
+    "src": "resources/dist/css/_app.css"
+  },
+  "resources/images/bg-login-page.svg": {
+    "file": "assets/bg-login-page-81e24375.svg",
+    "src": "resources/images/bg-login-page.svg"
+  },
+  "resources/js/app.css": {
+    "file": "assets/app-83b9ea77.css",
+    "src": "resources/js/app.css"
+  },
+  "resources/js/app.js": {
+    "css": [
+      "assets/app-83b9ea77.css"
+    ],
+    "file": "assets/app-391b4582.js",
+    "imports": [
+      "_dropzone-e0856a71.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/app.js"
+  },
+  "resources/js/pages/frontend/app.js": {
+    "file": "assets/app-0e9faf5c.js",
+    "imports": [
+      "_dropzone-e0856a71.js"
+    ],
+    "isEntry": true,
+    "src": "resources/js/pages/frontend/app.js"
+  },
+  "resources/sass/app.scss": {
+    "file": "assets/app-10e7d0f3.css",
+    "isEntry": true,
+    "src": "resources/sass/app.scss"
+  }
+}

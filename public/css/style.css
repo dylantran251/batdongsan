@@ -1,0 +1,43 @@
+/* Ba font chính */
+
+/* @font-face {
+    font-family: 'SVN-Gotham';
+    src: url('../fonts/SVN-Gotham/SVN-Gotham\ Light.otf');
+    font-weight: normal;
+} */
+@font-face {
+    font-family: 'SVN-Gotham';
+    src: url('../fonts/SVN-Gotham/SVN-Gotham\ Regular.otf');
+    font-weight: bold;
+}
+@font-face {
+    font-family: 'SVN-Gotham';
+    src: url('../fonts/SVN-Gotham/SVN-Gotham\ Book.otf');
+    font-weight:normal;
+}
+
+@font-face {
+    font-family: 'SVN-Gotham Black';
+    src: url('../font/SVN-Gotham/SVN-Gotham\ Black.otf');
+
+}
+/*  */
+
+@font-face {
+    font-family: 'SVN-Gotham';
+    src: url('../fonts/SVN-Gotham/SVN-Gotham\ Bold.otf');
+    font-weight: 900;
+}
+
+@font-face {
+    font-family: 'SVN-Gotham Thin';
+    src: url('../font/SVN-Gotham/SVN-Gotham\ Thin.otf');
+}
+@font-face {
+    font-family: 'SVN-Gotham Ultra';
+    src: url('../font/SVN-Gotham/SVN-Gotham\ Ultra.otf');
+}
+@font-face {
+    font-family: 'SVN-Gotham Black';
+    src: url('../font/SVN-Gotham/SVN-Gotham\ Black.otf');
+}
