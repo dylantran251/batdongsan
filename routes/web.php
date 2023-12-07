@@ -1,7 +1,7 @@
 <?php
 // admin
 use App\Http\Controllers\Admin\AdminController;
-use App\Http\Controllers\Admin\CategoryControllerAdmin as CategoryControllerAdminAdmin;
+// use App\Http\Controllers\Admin\CategoryControllerAdmin as CategoryControllerAdminAdmin;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
@@ -26,6 +26,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Common\CategoryController;
 use App\Http\Controllers\Common\TagController as FrontendTag;
 use App\Http\Controllers\Common\UploadController;
+use App\Models\Category;
 
 /*
 |--------------------------------------------------------------------------
@@ -62,7 +63,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'], functio
 
         Route::group(['prefix'=>'users', 'as'=> 'users.'], function (){
             Route::get('/', [UserController::class, 'index'])->name('index');
-            Route::get('/get-items', [UserController::class, 'getItems'])->name('getItems');
+            Route::get('/get-items', [UserController::class, 'getItems'])->name('get-items');
             Route::post('/store', [UserController::class, 'store'])->name('store');
             Route::put('{user}/update', [UserController::class, 'update'])->name('update');
             Route::delete('{user}/destroy', [UserController::class, 'destroy'])->name('destroy');
@@ -70,23 +71,28 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'], functio
         });
 
         Route::group(['prefix'=>'posts', 'as'=> 'posts.'], function (){
-           Route::get('/', [AdminPost::class, 'index'])->name('index');
+           Route::get('/', [AdminPost::class, 'listPosts'])->name('index');
            Route::get('/get-items', [AdminPost::class, 'getItems'])->name('getItems');
            Route::get('{post}/get-item', [AdminPost::class, 'getItem'])->name('getItem');
-           Route::get('create', [AdminPost::class, 'create'])->name('create');
+           Route::get('create', [AdminPost::class, 'createPosts'])->name('create');
            Route::post('store', [AdminPost::class, 'store'])->name('store');
            Route::get('{post}/edit', [AdminPost::class, 'edit'])->name('edit');
            Route::put('{post}/update', [AdminPost::class, 'update'])->name('update');
            Route::delete('{post}/destroy', [AdminPost::class, 'destroy'])->name('destroy');
         });
 
+        Route::group(['prefix'=>'news', 'as'=> 'news.'], function (){
+            Route::get('/', [AdminPost::class, 'listNews'])->name('index');
+            Route::get('/create', [AdminPost::class, 'createNews'])->name('create');
+        });
         Route::group(['prefix'=>'categories', 'as'=> 'categories.'], function (){
-            Route::get('/', [CategoryControllerAdmin::class, "index"])->name('index');
-            Route::post('/', [CategoryControllerAdmin::class, "store"])->name('store');
-            Route::get('/get-items', [CategoryControllerAdmin::class, "getItems"])->name('getItems');
-            Route::put('{category}/update', [CategoryControllerAdmin::class, "update"])->name('update');
-            Route::post('{category}/destroy', [CategoryControllerAdmin::class, "destroy"])->name('destroy');
-            Route::get('/get-real-estate-types', [CategoryControllerAdmin::class, 'getRealEstateTypes'])->name('getRealEstateTypes');
+            Route::get('/', [CategoryController::class, "index"])->name('index');
+            Route::get('/get-items', [CategoryController::class, 'getItems'])->name('get-items');
+            Route::get('/{category}/get-item', [CategoryController::class, 'getItem'])->name('get-item');
+
+            Route::post('/store', [CategoryController::class, 'store'])->name('store');
+            Route::put('{category}/update', [CategoryController::class, 'update'])->name('update');
+            Route::delete('{category}/destroy', [CategoryController::class, "destroy"])->name('destroy');
         });
 
         Route::group(['prefix'=>'tags', 'as'=> 'tags.'], function (){

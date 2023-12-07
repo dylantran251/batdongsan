@@ -3,7 +3,6 @@ import axios from "axios";
 
 export const buildDeleteModal =  (cb)=>{
     let deleteModal = $('#delete-modal');
-    console.log(deleteModal)
     if(deleteModal.length > 0)
     {
         let targets = $('[data-tw-target="#delete-modal"]')

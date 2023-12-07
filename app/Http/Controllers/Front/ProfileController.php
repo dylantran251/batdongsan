@@ -24,29 +24,29 @@ class ProfileController extends Controller
 
     public function update(Request $request,$id){
         $request->validate([
-            'image' => 'nullable|image|mimes:png,jpg,svg,jpeg|max:5096',
+            'avatar' => 'nullable|image|mimes:png,jpg,svg,jpeg|max:5096',
             'name' => 'required',
-            // 'email' => 'unique:users,email|required|email',
-            'phone-number' => 'required'
+            'phone' => 'required'
         ]);
-        $customer = User::findOrFail($id);
-        if($request->hasFile('image')){
-            $imagePath = public_path('uploads/' . $customer->image);
+        $user = User::findOrFail($id);
+        if($request->hasFile('avatar')){
+            $imagePath = public_path('uploads/' . $user->avatar);
             if (File::exists($imagePath)) {
                 File::delete($imagePath);
             }
-            $path = time() . '.' . $request->image->getClientOriginalExtension();
-            $request->file('image')->move(public_path('/uploads') , $path);
-            $customer->update([
+            $path = time() . '.' . $request->avatar->getClientOriginalExtension();
+            $request->avatar->move(public_path('/uploads') , $path);
+            $user->update([
                 'name' => $request->name,
-                'phone' => $request->input('phone-number'),
+                'phone' => $request->input('phone'),
                 'avatar' => $path
             ]);
         }
-        $customer->update([
+        $user->update([
             'name' => $request->name,
-            'phone' => $request->input('phone-number'),
+            'phone' => $request->input('phone'),
         ]);
+        toastr()->success('Thông tin đã được cập nhật', 'Thành công');
         return back();
     }
 }

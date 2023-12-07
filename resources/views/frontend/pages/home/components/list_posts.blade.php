@@ -115,8 +115,6 @@
             }
         }
 
-
-
         document.addEventListener('DOMContentLoaded', function () {
             sliderPostsByCategory()
             changeBackground()

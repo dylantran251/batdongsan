@@ -19,13 +19,17 @@ use PhpParser\Node\Stmt\Catch_;
 
 class PostController extends Controller
 {
-    public function index(Request $request): View|\Illuminate\Foundation\Application|Factory|Application
+    public function listPosts(Request $request): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        if ($request->type === 1){
-            $title = 'Quản lý bài đăng';
-        }
-        $title = 'Quản lý tin tức';
-        return view('admin.pages.posts.index', compact('title'));
+        $title = "Danh sách tin đăng";
+        $type = 'posts';
+        return view('admin.pages.posts.index', compact('title', 'type'));
+    }
+
+    public function listNews(){
+        $title = "Danh sách tin tức";
+        $type = 'news';
+        return view('admin.pages.posts.index', compact('title', 'type'));
     }
 
     public function getItems(Request $request): JsonResponse
@@ -53,18 +57,21 @@ class PostController extends Controller
         }
     }
 
-    public function create(Request $request)
+    // Return view createPP
+    public function createNews()
     {
-        $type = $request->type;
-        $categories = Category::where('type', $type)->where('parent_id', 0)->get();
-        if($type == 1){
-            $title = 'Tạo bài đăng';
-            return view('admin.pages.posts.create', compact('title', 'categories'));
-        }else{
-            $title = 'Tạo tin tức';
-            return view('admin.pages.posts.create', compact('title', 'categories'));
-        }
-        return back();
+        $title = 'Tạo tin tức';
+        $type = 'news';
+        $categories = Category::where('type', 0)->where('parent_id', 0)->get();
+        return view('admin.pages.posts.form.index', compact('title', 'type', 'categories'));
+    }
+
+    public function createPosts(){
+        $title = 'Tạo bài đăng';
+        $type = 'posts';
+        $realEstateTypes = Category::where('parent_id', '<', 0)->orWhere('parent_id', 1)->where('type', 1)->get();
+        $categories = Category::where('type', 1)->where('parent_id', 0)->get();
+        return view('admin.pages.posts.form.index', compact('title', 'type', 'categories', 'realEstateTypes'));
     }
 
     public function edit(Request $request, Post $post){
@@ -73,7 +80,8 @@ class PostController extends Controller
         if($type == 1){
             return view('admin.pages.posts.create',compact('post', 'categories'));
         }
-        return view('admin.pages.posts.create',compact('post', 'categories'));    }
+        return view('admin.pages.posts.create',compact('post', 'categories'));    
+    }
 
     // public function syncTagsPost(Post $post, $names): void
     // {

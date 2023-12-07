@@ -11,20 +11,24 @@ use Illuminate\Contracts\View\View;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Log ;
 use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
     public function index(): View|\Illuminate\Foundation\Application|Factory|Application
     {
-        return view('admin.pages.users.index');
+        $title = 'Danh sách người dùng';
+        return view('admin.pages.users.index', compact('title'));
     }
 
     public function getItems(Request $request): JsonResponse
     {
         try {
-            $users = User::orderByDesc('id')->paginate(40);
-            return Response::json($users, 200);
+            $limit = $request->limit ?? 40;
+            $users = User::orderByDesc('created_at')->paginate($limit);
+            return Response::json(['data' => $users], 200);
         }
         catch (Exception $exception)
         {
@@ -35,7 +39,7 @@ class UserController extends Controller
     public function getItem(User $user): JsonResponse
     {
         try {
-            return Response::json($user);
+            return Response::json(['data' => $user], 200);
         }
         catch (Exception $exception)
         {
@@ -46,18 +50,23 @@ class UserController extends Controller
     public function store(Request $request): JsonResponse
     {
         try {
-            if($request->password === $request->input('confirm-password')){
-                User::create([
-                    'name' => $request->input('full-name'),
-                    'email' => $request->email, 
-                    'phone' => $request->input('phone-number'),
-                    'role_id' => $request->input('role-id'),
-                    'password' => Hash::make($request->input('password')),
-                ]);     
-                return Response::json(['message' => 'User Created!'], 200);           
-            } 
-        } catch (Exception $exception) {
-            return Response::json(['message' => $exception->getMessage()], 500);
+            $data = $request->all();
+            $validator = Validator::make($data, [
+                'name' => 'required',
+                'phone' => 'required',
+                'email' => 'unique:users,email|required|email',
+                'role_id' => 'required',
+                'password' => 'required|confirmed|min:6'
+       
+            ]);
+            if ($validator->fails()) {
+                return Response::json(['errors' => $validator->errors()], 422);
+            }
+            $data['password'] = Hash::make($data['password']);
+            User::create($data);     
+            return Response::json(['message' => 'Đã thêm người dùng mới!'], 200);           
+        } catch (Exception $e) {
+            return Response::json(['error' => $e->getMessage()], 500);
         }
     }
 
@@ -65,14 +74,21 @@ class UserController extends Controller
     {
         try {
             $data = $request->all();
-            if( $request->password == null)
-            { 
+            $validator = Validator::make($data, [
+                'name' => 'required',
+                'phone' => 'required',
+                'role_id' => 'required',
+            ]);
+            if ($validator->fails()) {
+                return Response::json(['errors' => $validator->errors()], 422);
+            }
+            if(isset($data['password'])){
                 unset($data['password']);
             }
-            $user->update($data);
-            return Response::json(['message' => 'User Updated!'], 200);
-        } catch (Exception $exception) {
-            return Response::json(['message' => $exception->getMessage()], 500);
+            $user->update($data);    
+            return Response::json(['message' => 'Đã cập nhật người dùng!'], 200);           
+        } catch (Exception $e) {
+            return Response::json(['error' => $e->getMessage()], 500);
         }
         
     }
@@ -81,7 +97,7 @@ class UserController extends Controller
     {
         try {
             $user->delete();
-            return Response::json(['message' => 'User Deleted!']);
+            return Response::json(['message' => 'Đã xóa người dùng này']);
         }catch (Exception $exception)
         {
             return \response()->json(['message'=> $exception->getMessage()], 500);

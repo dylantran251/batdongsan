@@ -10,7 +10,7 @@
                 <div class="intro-y flex items-center h-10">
                     <h2 class="text-lg font-medium truncate mr-5">Trang quản trị</h2>
                     <a href="" class="ml-auto flex text-theme-1">
-                        <i data-feather="refresh-ccw" class="w-4 h-4 mr-3"></i> Cập nhật dữ liệu
+                        <i data-feather="refresh-ccw text-blue-400" class="w-4 h-4 mr-3"></i> Cập nhật dữ liệu
                     </a>
                 </div>
                 <div class="grid grid-cols-12 gap-6 mt-5">
@@ -42,7 +42,7 @@
                                     </div>
                                 </div>
                                 <div class="text-3xl font-bold leading-8 mt-6">3</div>
-                                <div class="text-base text-gray-600 mt-1">Bài viết mới</div>
+                                <div class="text-base text-gray-600 mt-1">Tin tức</div>
                             </div>
                         </div>
                     </div>
@@ -58,7 +58,7 @@
                                     </div>
                                 </div>
                                 <div class="text-3xl font-bold leading-8 mt-6">{{ $sumPost }}</div>
-                                <div class="text-base text-gray-600 mt-1">Bài viết</div>
+                                <div class="text-base text-gray-600 mt-1">Tin đăng</div>
                             </div>
                         </div>
                     </div>

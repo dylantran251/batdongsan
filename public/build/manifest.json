@@ -1,9 +1,9 @@
 {
-  "_dropzone-13faa90d.js": {
+  "_dropzone-e51aac31.js": {
     "css": [
       "assets/dropzone-d5b9b975.css"
     ],
-    "file": "assets/dropzone-13faa90d.js"
+    "file": "assets/dropzone-e51aac31.js"
   },
   "dropzone.css": {
     "file": "assets/dropzone-d5b9b975.css",
@@ -31,28 +31,28 @@
     "css": [
       "assets/app-83b9ea77.css"
     ],
-    "file": "assets/app-d3e8807b.js",
+    "file": "assets/app-3be47dd3.js",
     "imports": [
-      "_dropzone-13faa90d.js"
+      "_dropzone-e51aac31.js"
     ],
     "isEntry": true,
     "src": "resources/js/app.js"
   },
   "resources/js/pages/frontend/app.js": {
-    "file": "assets/app-a45ca669.js",
+    "file": "assets/app-102caa3e.js",
     "imports": [
-      "_dropzone-13faa90d.js"
+      "_dropzone-e51aac31.js"
     ],
     "isEntry": true,
     "src": "resources/js/pages/frontend/app.js"
   },
   "resources/sass/_custom.scss": {
-    "file": "assets/_custom-6b7fc011.css",
+    "file": "assets/_custom-09f2bdc4.css",
     "isEntry": true,
     "src": "resources/sass/_custom.scss"
   },
   "resources/sass/app.scss": {
-    "file": "assets/app-10e7d0f3.css",
+    "file": "assets/app-f009809a.css",
     "isEntry": true,
     "src": "resources/sass/app.scss"
   }

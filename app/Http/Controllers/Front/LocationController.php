@@ -74,12 +74,12 @@ class LocationController extends Controller
                     'province_full_name' => $province->full_name,
                     'province_name' => $province->name,
                     'quantity_posts' => $quantity_posts,
-                    'real_estate_type' => $data['real_estate_type'],
+                    'real_estate_type' => isset($data['real_estate_type']) ? $data['real_estate_type'] : 0,
                 ];
             }
             return Response::json(['data' => $dataPostsByProvince], 200);
         }catch(Exception $e){
-            return Response::json(['error' => 'Đã có lỗi xảy ra '. $e->getMessage()], 500);
+            return Response::json(['mesage' => 'Đã có lỗi xảy ra '. $e->getMessage()], 500);
         }
     }
 

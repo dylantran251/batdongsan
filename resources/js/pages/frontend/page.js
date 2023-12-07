@@ -22,6 +22,7 @@ function loadMoreProvinces() {
                 success: function (response) {
                     const liCurrent = $(".li-province-current").last();
                     let data = response.data;
+                    console.log(data)
                     let html = '';
                     // Sử dụng forEach để lặp qua mảng data
                     data.forEach(function (item) {
@@ -42,7 +43,7 @@ function loadMoreProvinces() {
                      
                 },
                 error: function (error) {
-                    console.log(error.error);
+                    console.log(error.message);
                 }
             })
         }else{

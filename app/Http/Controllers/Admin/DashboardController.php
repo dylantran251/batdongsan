@@ -12,7 +12,8 @@ class DashboardController extends Controller
     //
     public function index(){
         $sumUser = User::count();
-        $sumPost = Post::count();
+        $sumPost = Post::where('type', 1)->count();
+        $sumNews = Post::where('type', 0)->count();
         return view('admin.pages.dashboard', compact('sumUser', 'sumPost'));
     }
 

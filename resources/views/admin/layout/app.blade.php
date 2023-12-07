@@ -10,6 +10,8 @@
     <meta name="author" content="{{ env("APP_AUTHOR") }}">
     @yield('title')
     <!-- BEGIN: CSS Assets-->
+    <script src="https://kit.fontawesome.com/6df1d2f167.js" crossorigin="anonymous"></script>
+
      @vite(['resources/sass/app.scss','resources/css/app.css', 'resources/js/app.js', 'resources/dist/css/_app.css'])
      <script src="https://cdn.tailwindcss.com"></script>
        {{-- Ckeditor --}}
