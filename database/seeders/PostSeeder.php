@@ -73,41 +73,37 @@ class PostSeeder extends Seeder
             if($ward_id === null){
                 $ward_id = 0;
             }
-            $type = $faker->numberBetween(1,0);
+
             $category_id = 0;
             $real_estate_type_id = 0;
             $randImages = null;
             $keyword_name = $faker->text(100);
             $keyword_id = 0;
-            if($type === 1){
-                $category_id = $faker->numberBetween(1,3);
-                if($category_id === 1){
-                    $keyword_name = 'bán';
-                }elseif($category_id === 2){
-                    $keyword_name = 'môi giới';
-                }else{
-                    $keyword_name = 'cho thuê';
-                }
-                $real_estate_types = Category::where('parent_id', $category_id)->orWhere('parent_id', -1)->get();
-                $real_estate_type_id = $faker->randomElement($real_estate_types->pluck('id')->toArray());
-                $real_estate_type = $real_estate_types->where('id', $real_estate_type_id)->first();
-                $keyword_name = $keyword_name.' '.$real_estate_type->name ; 
-                $randImages = $faker->randomElements($images, 5);
-                $keyword_name = ucfirst(strtolower($keyword_name)) .' '. $province->name;
-                $keyword = Keyword::create([
-                    'name' => $keyword_name
-                ]);
-                $keyword_id = $keyword->id;
+
+            $category_id = $faker->numberBetween(1,3);
+            if($category_id === 1){
+                $keyword_name = 'bán';
+            }elseif($category_id === 2){
+                $keyword_name = 'môi giới';
             }else{
-                $category_id = $faker->numberBetween(4,5);
-                $randImages = $faker->randomElement($images);
+                $keyword_name = 'cho thuê';
             }
+            $real_estate_types = Category::where('parent_id', $category_id)->orWhere('parent_id', -1)->get();
+            $real_estate_type_id = $faker->randomElement($real_estate_types->pluck('id')->toArray());
+            $real_estate_type = $real_estate_types->where('id', $real_estate_type_id)->first();
+            $keyword_name = $keyword_name.' '.$real_estate_type->name ; 
+            $randImages = $faker->randomElements($images, 5);
+            $keyword_name = ucfirst(strtolower($keyword_name)) .' '. $province->name;
+            $keyword = Keyword::create([
+                'name' => $keyword_name
+            ]);
+            $keyword_id = $keyword->id;
+
             $created_at = $faker->dateTimeBetween('2023-01-01', 'now');
             $expired_at = clone $created_at; // Clone để tránh thay đổi đối tượng gốc
             $expired_at->add(new DateInterval('P1M'));
             $post = Post::create([
                 'user_id' => $faker->numberBetween(1,50),
-                'type' => $type,
                 'province_id' => $province_id,
                 'district_id' => $district_id,
                 'ward_id' => $ward_id,
@@ -125,7 +121,6 @@ class PostSeeder extends Seeder
                 'balcony_direction' => $faker->numberBetween(1,8),
                 'status' => $faker->numberBetween(1,2),
                 'legal_documents' => $faker->randomElement(['Sổ đỏ/Sổ hồng', 'Giấy tờ viết tay', 'Đang chờ cấp giấy tờ']),
-                'short_description' => $faker->text(500),
                 'description' => $faker->realText(1000, 5),
                 'real_estate_type' => $real_estate_type_id, 
                 'created_at' => $created_at,

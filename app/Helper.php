@@ -43,9 +43,9 @@ class Helper
         $numberLength = strlen($number);
         if($numberLength >= 10 && $number/1000000000 >= 1){
             return round($number/1000000000, 2). ' tỷ';
-        }elseif($numberLength < 10 && $numberLength >=7 && $number/1000000 >= 1){
+        }elseif($numberLength < 10 && $numberLength >6 && $number/1000000 >= 1){
             return round($number/1000000, 1). ' triệu';
-        }elseif($numberLength < 7 && $numberLength>=4 && $number/1000 > 1){
+        }elseif($numberLength < 7 && $numberLength>3 && $number/1000 > 1){
             return round($number/1000, 0). ' nghìn';
         }
         return 'Thỏa thuận';

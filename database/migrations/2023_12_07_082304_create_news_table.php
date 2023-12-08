@@ -15,10 +15,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('category_id')->nullable();
+            $table->string('avatar');
             $table->string('title')->index();
             $table->text('description')->nullable();
             $table->longText('content');
             $table->string('source')->nullable();
+            $table->text('note')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

@@ -14,8 +14,9 @@ class CategoryController extends Controller
 {
 
     // ====================================== admin =========================================
-    public function index(){
-        $categories = Category::where('parent_id', 0)->with('_children')->get();
+    public function index(Request $request){
+        $limit = $request->limit ?? 40;
+        $categories = Category::where('parent_id', 0)->with('_children')->paginate($limit);
         $title = 'Danh sách danh mục';
         return view('admin.pages.categories.index', compact('title', 'categories'));
     }
@@ -65,7 +66,7 @@ class CategoryController extends Controller
 
             $data = $request->all();
             $category->update($data);
-            return Response::json(['success' => $data ], 200);
+            return Response::json(['success' => 'Đã cập nhật danh mục này' ], 200);
         }catch(Exception $e){
             return Response::json(['error' => 'Đã xảy ra lỗi '.$e->getMessage()]);
         }
@@ -74,7 +75,7 @@ class CategoryController extends Controller
     public function destroy(Category $category){
         try{
             $category->delete();
-            return Response::json(['message' => 'Đã xóa thành công'], 200);
+            return Response::json(['message' => 'Đã xóa thành công danh mục này'], 200);
         }catch(Exception $e){
             return Response::json(['error' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
@@ -102,6 +103,4 @@ class CategoryController extends Controller
         }
         return $category_name;
     }
-    
-
 }

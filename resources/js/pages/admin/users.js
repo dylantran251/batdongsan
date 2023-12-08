@@ -22,9 +22,22 @@ function dataTable(){
             { 
                 title: "Người dùng", 
                 field: "name", 
-                formatter: combinedNameAndImageFormatter, 
                 headerHozAlign: "center",
-                hozAlign: 'center'
+                hozAlign: 'center',
+                formatter: function (cell, formatterParams, onRendered) {
+                    // Access the data for the current row
+                    var rowData = cell.getRow().getData();
+                
+                    // Create HTML content with combined name and image
+                    var htmlContent = '<div style="display: flex; align-items: center;">';
+
+                    htmlContent += `<img src="${rowData.photo_url}"  alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover;">`;
+                    
+                    htmlContent += '<span>' + rowData.name + '</span>';
+                    htmlContent += '</div>';
+                
+                    return htmlContent;
+                }
             },
             { title: "Email", field: "email", headerHozAlign: "center", hozAlign: 'center' },
             { title: "Số điện thoại", field: "phone", formatter: "html", headerHozAlign: "center", hozAlign: 'center'  },
@@ -36,18 +49,7 @@ function dataTable(){
         },
     });
     
-    function combinedNameAndImageFormatter(cell, formatterParams, onRendered) {
-        // Access the data for the current row
-        var rowData = cell.getRow().getData();
-    
-        // Create HTML content with combined name and image
-        var htmlContent = '<div style="display: flex; align-items: center;">';
-        htmlContent += '<img src="http://172.23.58.100:8000/uploads/' + rowData.avatar + '" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover;">';
-        htmlContent += '<span>' + rowData.name + '</span>';
-        htmlContent += '</div>';
-    
-        return htmlContent;
-    }
+
     
     table.on('dataProcessed', function () {
         // buildEditFnc()
@@ -149,7 +151,16 @@ function getItem(){
 function create(){
     $('#users-management-page .create').on('click', function(e){
         e.preventDefault();
-        $('.select-container').after('<h1>Em biết gì sddâus </h1>')
+        if($('.password-container').length === 0){
+            $('.modal-body').append(`<div class="col-span-12 sm:col-span-6 password-container">
+                                        <label for="password" class="form-label">Mật khẩu</label>
+                                        <input type="password" id="password" name="password" class="form-control"  placeholder="1234@">
+                                    </div>
+                                    <div class="col-span-12 sm:col-span-6 password_confirmation-container">
+                                        <label for="password_confirmation" class="form-label">Xác nhận mật khẩu</label>
+                                        <input type="password" name="password_confirmation" id="password_confirmation" class="form-control"  placeholder="1234@">
+                                    </div>`)
+        }
     })
 }
 
@@ -206,8 +217,9 @@ function validateForm(){
 }
 
 $(document).ready(function () {
-
-    if($('#users-data-table')){
+    
+    if($('#users-management-page').length){
+        create()
         dataTable()
     }
     

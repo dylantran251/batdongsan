@@ -37,7 +37,7 @@
                 </div> 
                 <div class="modal-footer">
                     <button type="button" data-tw-dismiss="modal" data-url-store="{{ route('admin.users.store') }}"  class="cancel-submit btn btn-outline-secondary w-20 mr-1">Hủy</button>
-                    <button type="submit" data-tw-dismiss="modal" data-url-store="{{ route('admin.users.store') }}" class="submit-form btn btn-primary w-20 text-red-500">Tạo</button>
+                    <button type="submit" data-url-store="{{ route('admin.users.store') }}" class="submit-form btn btn-primary w-20 text-red-500">Tạo</button>
                 </div> 
             </form>
         </div>

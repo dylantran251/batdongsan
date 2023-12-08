@@ -5,7 +5,7 @@
 @endsection
 
 @section('subcontent')
-    <div id="post-index-page ">
+    <div id="posts-management-page">
         <div class="intro-y flex flex-col sm:flex-row items-center " data-page="admin-post">
             <h2 style="font-size: 25px;" class="font-bold mr-auto text-upcase">{{ $title }}</h2>
             <div class="w-full sm:w-auto flex mt-4 sm:mt-0">
@@ -14,8 +14,8 @@
         </div>
         <!-- BEGIN: Datatable -->
         <div class="intro-y datatable-wrapper box p-5 mt-5" data-page="admin-user">
-            <div id="data-table" class="text-base text-black" data-type="{{ $type }}" 
-            data-ajax="{{ route('admin.posts.getItems') }}"></div>
+            <div id="posts-data-table" class="text-base text-black" data-type="{{ $type }}" 
+            data-ajax="{{ route('admin.posts.getItems', $type) }}"></div>
             @include('admin.layout.components.crud_delete_modal')
         </div>
     </div>

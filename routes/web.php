@@ -72,7 +72,7 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'], functio
 
         Route::group(['prefix'=>'posts', 'as'=> 'posts.'], function (){
            Route::get('/', [AdminPost::class, 'listPosts'])->name('index');
-           Route::get('/get-items', [AdminPost::class, 'getItems'])->name('getItems');
+           Route::get('{post}/get-items', [AdminPost::class, 'getItems'])->name('getItems');
            Route::get('{post}/get-item', [AdminPost::class, 'getItem'])->name('getItem');
            Route::get('create', [AdminPost::class, 'createPosts'])->name('create');
            Route::post('store', [AdminPost::class, 'store'])->name('store');

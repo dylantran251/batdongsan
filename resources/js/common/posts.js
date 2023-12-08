@@ -261,7 +261,7 @@ export function inputPostsData(){
     post['title'] = $('input[name="title"]').val();     
     post['description'] = $('textarea[name="description"]').val();
     post['short_description'] = '';  
-    post['price'] = ($('input[name="price"]').val()).replace(/\./g, '');   
+    post['price'] = ($('input[name="price"]').val() === 'Thỏa thuận') ? 0 : ($('input[name="price"]').val()).replace(/\./g, '');   
     post['area'] = $('input[name="area"]').val(); 
     post['sub_price'] = 0;
     if(post['price'] !== null && post['area'] !== null){

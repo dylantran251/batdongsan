@@ -65,6 +65,7 @@ class User extends Authenticatable
         if($this->avatar !== null){
             return url('uploads/'.$this->avatar);
         }
+        return url('uploads/default.jpg');
     }
     public function getRoleAttribute()
     {

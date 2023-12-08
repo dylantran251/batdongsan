@@ -52,6 +52,9 @@
                 <li>
                     <a href="{{ route('admin.posts.create') }}" class="top-menu text-base">Thêm mới</a>
                 </li>
+                <li>
+                    <a href="" class="top-menu text-base">Chờ duyện</a>
+                </li>
             </ul>
         </li>
         <li>

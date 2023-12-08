@@ -38,8 +38,8 @@ function dataTable(){
         getItem();
         $('.delete-category').on('click', function(e){
             e.preventDefault();
-            $('#delete-modal').addClass('delete-category');
-            $('.delete-category #delete-form').attr('data-url', $(this).attr('data-url'));
+            $('#delete-modal').addClass('modal-delete-category');
+            $('.modal-delete-category #delete-form').attr('data-url', $(this).attr('data-url'));
             destroy(table)
         })
     });
@@ -119,11 +119,11 @@ function validateForm() {
 }
 
 function destroy(table){
-    $('.delete-category .btn-delete-modal').on('click', function(e){
+    $('.modal-delete-category .btn-delete-modal').on('click', function(e){
         e.preventDefault()
         const csrf_token = $('meta[name="csrf-token"]').attr('content');
         $.ajax({
-            url: $('#delete-form').attr('data-url'),
+            url: $('.modal-delete-category #delete-form').attr('data-url'),
             method: 'DELETE',
             data: {
                 _token: csrf_token

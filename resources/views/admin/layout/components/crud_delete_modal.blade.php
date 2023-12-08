@@ -15,7 +15,7 @@
                         </div>
                         <div class="px-5 pb-8 text-center">
                             <button type="button" data-tw-dismiss="modal" class="btn btn-outline-secondary w-24 mr-1">Hủy</button>
-                            <button type="button" data-tw-dismiss="modal" class="btn-delete-modal btn btn-danger w-24 text-white bg-red-500">Xóa</button>
+                            <button type="submit" class="btn-delete-modal btn btn-danger w-24 text-white bg-red-500">Xóa</button>
                         </div>
                     </div>
                 </form>

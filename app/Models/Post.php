@@ -22,14 +22,14 @@ class Post extends Model
         'province_id',
         'district_id',
         'ward_id',    
-        'type' ,          
+        // 'type' ,          
         'vip' ,             
         'title' ,            
         'description' ,     
-        'short_description' , 
+        // 'short_description' , 
         'price' ,            
         'sub_price' ,       
-        'location' ,       
+        // 'location' ,       
         'area' ,           
         'status' ,         
         'images' ,           
@@ -48,6 +48,7 @@ class Post extends Model
     protected $primaryKey = 'id';
     
     protected $appends = [
+        'location',
         'created_date',
         'currency_format',
         'regular_price',
@@ -59,6 +60,7 @@ class Post extends Model
     protected $casts = [
         'images' => 'object',
         'other_properties' => 'array',
+        'price' => 'float',
     ];
 
 
@@ -73,7 +75,8 @@ class Post extends Model
 
     public function getCurrencyFormatAttribute(): string
     {
-        return Helper::formatCurrencyVND($this->price);
+        $result = Helper::formatCurrencyVND($this->price);
+        return $result;
     }
 
     public function getRegularPriceAttribute(): string
@@ -86,14 +89,29 @@ class Post extends Model
         return number_format($this->area, 0, ',')." m&#178;";
     }
 
+    public function getLocationAttribute(){
+        $location = [];
+    
+        if ($this->ward) {
+            $location[] = $this->ward->name;
+        }
+        if ($this->district) {
+            $location[] = $this->district->name;
+        }
+        if ($this->province) {
+            $location[] = $this->province->name;
+        }
+        return implode(', ', $location);
+    }
+    
     public function getActionsAttribute(): string
     {
         if ($this->role != 'admin') {
             return '<div class="flex lg:justify-center items-center">
-                        <a class="edit-post flex items-center mr-3" href="' . route('admin.posts.edit', ['type' => $this->type, 'post' => $this]) . '" data-update-url="' . route('admin.posts.create', $this) . '" data-get="' . route('admin.posts.getItem', $this) . '" data-tw-toggle="modal" data-tw-target="#edit-user-modal" >
+                        <a class="edit-posts flex items-center mr-3" href="' . route('admin.posts.edit', $this) . '" data-update-url="' . '" data-get="' . route('admin.posts.getItem', $this) . '" >
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="check-square" data-lucide="check-square" class="lucide lucide-check-square w-4 h-4 mr-1"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 01-2 2H5a2 2 0 01-2-2V5a2 2 0 012-2h11"></path></svg> Sửa
                         </a>
-                        <a class="delete-post flex items-center text-danger" href="javascript:;" data-url="' . route('admin.posts.destroy', $this) . '"
+                        <a class="delete-posts flex items-center text-danger" href="javascript:;" data-url="'. route('admin.posts.destroy', $this) .'"
                         data-tw-toggle="modal" data-tw-target="#delete-modal">
                             <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" icon-name="trash-2" data-lucide="trash-2" class="lucide lucide-trash-2 w-4 h-4 mr-1">
                                 <polyline points="3 6 5 6 21 6"></polyline><path d="M19 6v14a2 2 0 01-2 2H7a2 2 0 01-2-2V6m3 0V4a2 2 0 012-2h4a2 2 0 012 2v2">

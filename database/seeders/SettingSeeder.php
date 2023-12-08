@@ -45,11 +45,6 @@ class SettingSeeder extends Seeder
                 'status' => true
             ],
             [
-                'email' => 'mã số thuế',
-                'values' => '01231564654',
-                'status' => true
-            ],
-            [
                 'name' => 'trụ sở',
                 'values' => 'Mỹ đình 1, Nam Từ Liêm - TP Hà Nội',
                 'status' => true
