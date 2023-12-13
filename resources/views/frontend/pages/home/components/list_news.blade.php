@@ -13,7 +13,7 @@
         @if($firstNews)
             <div class="hidden md:flex flex-col gap-8">
                 <div class="w-full ">
-                    <img src="{{ ($firstNews->getAvatar(0)) ? asset('uploads/'.$firstNews->getAvatar(0)) : asset('dist/images/preview-1.jpg') }}" class="w-full h-[450px] rounded-lg object-cover" alt="">
+                    <img src="{{ $firstNews->photo_url }}" class="w-full h-[450px] rounded-lg object-cover" alt="">
                 </div>
                 <a href="{{ route('news.details', ['news_title' => $firstNews['title']]) }}">
                     <h1 class="text-[25px] font-bold text-[#404040] mb-5 overflow-hidden line-clamp-2">{{ $firstNews['title'] }}</h1>
@@ -22,7 +22,7 @@
                             <path d="M15.7761 26.8334C22.1202 26.8334 27.2934 21.7758 27.2934 15.5C27.2934 9.22422 22.1202 4.16669 15.7761 4.16669C9.43189 4.16669 4.25867 9.22422 4.25867 15.5C4.25867 21.7758 9.43189 26.8334 15.7761 26.8334Z" stroke="#BDBDBD" stroke-width="2"/>
                             <path d="M21.6921 15.5H16.0261C15.888 15.5 15.7761 15.3881 15.7761 15.25V10.9792" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round"/>
                         </svg>
-                        {{ $firstNews->dateDifference() }}
+                        {{ $firstNews->date_difference }}
                     </p>
                 </a>
             </div>
@@ -31,7 +31,7 @@
             @foreach ($nextNews as $item)
                 <div class="flex flex-row md:mb-auto gap-4 pr-4">
                     <div class="w-2/5  flex justify-center items-center  ">
-                        <img src="{{ ($item->getAvatar(0)) ? asset('uploads/'.$item->getAvatar(0)) : asset('dist/images/preview-1.jpg') }}" class="w-full h-[170px] object-cover rounded-lg" alt="" >
+                        <img src="{{ $item->photo_url }}" class="w-full h-[170px] object-cover rounded-lg" alt="" >
                     </div>
                     <div class="w-3/5">
                         <a href="{{ route('news.details', ['news_title' => $item['title']]) }}" class="text-sm sm:text-[18px] flex flex-col gap-6">
@@ -41,7 +41,7 @@
                                     <path d="M15.7761 26.8334C22.1202 26.8334 27.2934 21.7758 27.2934 15.5C27.2934 9.22422 22.1202 4.16669 15.7761 4.16669C9.43189 4.16669 4.25867 9.22422 4.25867 15.5C4.25867 21.7758 9.43189 26.8334 15.7761 26.8334Z" stroke="#BDBDBD" stroke-width="2"/>
                                     <path d="M21.6921 15.5H16.0261C15.888 15.5 15.7761 15.3881 15.7761 15.25V10.9792" stroke="#BDBDBD" stroke-width="2" stroke-linecap="round"/>
                                 </svg>
-                                {{ ($item->dateDifference()) }}
+                                {{'Đăng '. $item->date_difference }}
                             </span>
                         </a>
                     </div>

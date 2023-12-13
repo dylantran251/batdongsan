@@ -62,7 +62,7 @@ class PostSeeder extends Seeder
             '1700805096933.jpg',
         ];
         
-        foreach (range(1, 500) as $index) {
+        foreach (range(1, 50) as $index) {
             $provinces = Province::all();
             $province_id = $faker->randomElement($provinces->pluck('id')->toArray());
             $province = Province::where('id', $province_id)->first();

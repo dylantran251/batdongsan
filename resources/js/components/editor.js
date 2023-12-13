@@ -43,12 +43,13 @@ import 'froala-editor/js/plugins/font_family.min.js'
 import 'froala-editor/js/plugins/help.min.js'
 import 'froala-editor/js/plugins/edit_in_popup.min.js'
 $(document).ready(function () {
-    let container = $("#WYSIWYG");
-    if(container){
-        var editor = new FroalaEditor("#WYSIWYG", {
+    let container = $("#content");
+    if(container.length){
+        let editor = new FroalaEditor("#content", {
             heightMin: 500,
             heightMax: 600,
-            toolbarSticky: false
+            toolbarSticky: false,
+            placeholderText: "Nhập nội dung bài viết..."
         })
     }
 })

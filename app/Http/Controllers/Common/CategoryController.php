@@ -48,7 +48,7 @@ class CategoryController extends Controller
                 return Response::json(['errors' => $validator->errors()], 422);
             }
             Category::create($data);
-            return Response::json(['success' => 'Đã thêm '. $data['name'] ], 200);
+            return Response::json(['success' => 'Đã thêm mới danh mục' ], 200);
         }catch(Exception $e){
             return Response::json(['error' => 'Đã xảy ra lỗi '.$e->getMessage()]);
         }
@@ -63,19 +63,17 @@ class CategoryController extends Controller
             if ($validator->fails()) {
                 return Response::json(['errors' => $validator->errors()], 422);
             }
-
-            $data = $request->all();
             $category->update($data);
             return Response::json(['success' => 'Đã cập nhật danh mục này' ], 200);
         }catch(Exception $e){
-            return Response::json(['error' => 'Đã xảy ra lỗi '.$e->getMessage()]);
+            return Response::json(['error' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
     }
 
     public function destroy(Category $category){
         try{
             $category->delete();
-            return Response::json(['message' => 'Đã xóa thành công danh mục này'], 200);
+            return Response::json(['message' => 'Đã xóa danh mục này'], 200);
         }catch(Exception $e){
             return Response::json(['error' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
@@ -92,15 +90,4 @@ class CategoryController extends Controller
         }
     }
 
-    public function checkShortenedNameCategory($name){
-        $category_name = '';
-        if($name === 'Bán'){
-            $category_name = 'Nhà đất chính chủ';
-        }elseif($name === 'Môi giới'){
-            $category_name = 'Nhà đất trung gian';
-        }elseif($name === 'Cho thuê'){
-            $category_name = 'Nhà đất cho thuê';
-        }
-        return $category_name;
-    }
 }

@@ -3,7 +3,7 @@ import { round } from 'lodash';
 
 import { validateForm, inputPostsData } from '../../../common/posts'
 
-function inputNewsData(){
+export function inputNewsData(){
     let post = {}
     post['category_id'] = $('#create-post-page .choose-category').attr('data-category-id');  
     post['province_id'] = 0
@@ -28,6 +28,7 @@ function inputNewsData(){
     post['legal_documents'] = '';   
     post['other_properties'] = [];
     post['real_estate_type'] = 0;
+ 
     post['tags'] = [];
     let tags = $('#tags').find('option:selected');
     tags.each(function() {
@@ -36,25 +37,25 @@ function inputNewsData(){
     return post;                                       
 }
 
-
-
 function handleForm() {
     const post_form = $("#create-post-page #post-form");
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
-    let handleAjax = (data, type) => {
-        let validator = validateForm();
-        let isFormValid = validator.form();
-        // if(isFormValid === true){
+    $("#create-post-page #submit-form").on('click', function (e) {
+        e.preventDefault();
+        var validator = validateForm();
+        var isFormValid = validator.form();
+        if(isFormValid === true){
             $.ajax({
                 url: post_form.attr('data-ajax'),
                 method: post_form.attr('data-method'),
                 data: {
-                    data,
+                    ...inputPostsData(),
                     _token: csrfToken
                 },
                 success: function (response) {
                     fireToast('success', 'Thành công', response.message);
-                    window.location.href = '/admin/'+ type
+        
+                    window.location.href = '/admin/posts/'
                 },
                 error: function (error) {
                     if (error.status === 422) {
@@ -64,16 +65,9 @@ function handleForm() {
                     }
                 }
             });
-        // }else{
-        //     validator.showErrors();
-        // }
-    }
-    $("#create-post-page #submit-form").on('click', function (e) {
-        e.preventDefault();
-        if(post_form.attr('data-type') === 'posts'){
-            handleAjax(...inputPostsData(), post_form.attr('data-type'))
+        }else{
+            validator.showErrors();
         }
-        handleAjax(inputNewsData(), post_form.attr('data-type'))
     });
 }
 

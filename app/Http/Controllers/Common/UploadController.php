@@ -15,12 +15,16 @@ class UploadController extends Controller
     public function upload(Request $request)
     {
         try {
-            $fileName = time().  random_int(100, 999)  .'.'.$request->file->extension();
+            $data = $request->all();
+            if(isset($data['avatar']) && File::exists(public_path('uploads/'.$data['avatar']))){
+                File::delete(public_path('uploads/'.$data['avatar']));
+            }
+            $fileName = time().  random_int(100, 999)  .'.'.$request->file->getClientOriginalExtension();
             $request->file->move(public_path('uploads'), $fileName);
             return Response::json(['data' => $fileName]);
         } catch (\Exception $e) {
             Log::error($e->getMessage());
-            return Response::json(['message' => 'Lỗi khi tải ảnh lên.']);
+            return Response::json(['message' => 'Lỗi khi tải ảnh lên ']);
         }
     }
 

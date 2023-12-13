@@ -8,21 +8,23 @@
         <p>Trang chủ/Tin tức/<span class="text-black">{{ $news['title'] }}</span> </p>
     </div>
     <div class="w-full ">
-        <h1 class="text-[40px] text-[#2c2c2c] font-bold mb-10">{{ $news['title'] }}</h1>
+        <h1 class="text-[35px] text-[#2c2c2c] font-medium mb-10">{{ $news['title'] }}</h1>
         <div class="flex item-center gap-4 mb-8">
-            <div class="w-20 h-20 ">
-                <img class="w-full h-full object-cover rounded-full" src="{{ $news->user['avatar'] ? asset('uploads/'.$news->user['avatar']) : asset('dist/images/preview-1.jpg') }}" alt="Ảnh tác giả">
+            <div class="w-14 h-14 ">
+                <img class="w-full h-full object-cover rounded-full" src="{{ $news->author->photo_url }}" alt="Ảnh tác giả">
             </div>    
             <div class="flex flex-col  justify-center gap-2">
-                <p class="text-base">Được đăng bởi <span class="font-bold">{{ $news->user['name'] }}</span></p>   
+                <p class="text-base">Được đăng bởi <span class="font-bold">{{ $news->author->name }}</span></p>   
                 <p class="text-base">Ngày đăng {{ $news['created_at'] }} </p>
             </div>        
         </div>
         <div class="grid grid-cols-12 gap-8">
             <div class="col-span-8 p-5">
+              
+
                 <div class="block mb-10">
-                    <p class="text-base mb-10">{{ $news['short_description'] }}</p>
-                    <p class="text-base">{!! $news['description'] !!}</p>
+                    <p class="text-base mb-10">{{ $news->description }}</p>
+                    <p class="text-base">{!! $news->content !!}</p>
                 </div>
                 <div class="block p-4 text-sm text-gray-800 rounded-lg bg-gray-50 dark:bg-gray-800 dark:text-gray-300 mb-10" role="alert">
                     <span class="font-medium">Nguồn</span> Từ abc xyz;

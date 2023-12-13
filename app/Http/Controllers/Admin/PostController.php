@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Category;
+use App\Models\Content;
 use App\Models\Post;
 use Exception;
 use Illuminate\Contracts\Foundation\Application;
@@ -19,53 +20,35 @@ use PhpParser\Node\Stmt\Catch_;
 
 class PostController extends Controller
 {
-    public function listPosts(Request $request): View|\Illuminate\Foundation\Application|Factory|Application
+    public function index(Request $request): View|\Illuminate\Foundation\Application|Factory|Application
     {
         $title = "Danh sách tin đăng";
-        $type = 'posts';
-        return view('admin.pages.posts.index', compact('title', 'type'));
+        return view('admin.pages.posts.index', compact('title'));
     }
 
-    public function listNews(){
-        $title = "Danh sách tin tức";
-        $type = 'news';
-        return view('admin.pages.posts.index', compact('title', 'type'));
-    }
-
-    public function getItems(Request $request, $type): JsonResponse
+    public function getItems(Request $request): JsonResponse
     {
         try {
-            $type = $type === 'posts' ? 1 : 0;
             $limit = $request->get('limit') ?? 40;
-            $posts = Post::with('user')->with('ward')->with('district')->with('province')->where('type', $type)->orderByDesc('created_at')->paginate($limit);
+            $posts = Post::with('user')->orderByDesc('created_at')->paginate($limit);
             return Response::json(['data' => $posts], 200);
-        } catch (Exception $exception) {
-            Log::error($exception->getMessage());
-            return Response::json(['message' => $exception->getMessage()], 500);
+        } catch (Exception $e) {
+            return Response::json(['message' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
     }
 
     public function getItem(Post $post): JsonResponse
     {
         try {
-            return Response::json($post);
+            return Response::json(['data' => $post], 200);
         }
-        catch (Exception $exception)
+        catch (Exception $e)
         {
-            return Response::json(['message'=> $exception->getMessage()], 500);
+            return Response::json(['message' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
     }
 
-    // Return view createPP
-    public function createNews()
-    {
-        $title = 'Tạo tin tức';
-        $type = 'news';
-        $categories = Category::where('type', 0)->where('parent_id', 0)->get();
-        return view('admin.pages.posts.form.index', compact('title', 'type', 'categories'));
-    }
-
-    public function createPosts(){
+    public function create(){
         $title = 'Tạo bài đăng';
         $type = 'posts';
         $realEstateTypes = Category::where('parent_id', '<', 0)->orWhere('parent_id', 1)->where('type', 1)->get();
@@ -82,21 +65,6 @@ class PostController extends Controller
     //     return view('admin.pages.posts.create',compact('post', 'categories'));    
     // }
 
-    // public function syncTagsPost(Post $post, $names): void
-    // {
-    //     $tagIds = [];
-    //     $names = array_map('strtolower', $names);
-    //     $tags = Tag::whereIn('name', $names)->get();
-    //     foreach ($names as $name) {
-    //         if (is_null($tags->where('name', $name)->first())) {
-    //             $tag = Category::create(['name' => $name]);
-    //             $tagIds[] = $tag->id;
-    //         }
-    //     }
-    //     if (count($tagIds) > 0) {
-    //         $post->tags()->sync($tagIds);
-    //     }
-    // }
 
     public function store(Request $request): JsonResponse
     {

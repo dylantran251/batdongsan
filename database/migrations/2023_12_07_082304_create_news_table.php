@@ -21,6 +21,7 @@ return new class extends Migration
             $table->longText('content');
             $table->string('source')->nullable();
             $table->text('note')->nullable();
+            $table->time('expired_at')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });

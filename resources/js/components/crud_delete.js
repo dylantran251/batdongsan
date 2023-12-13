@@ -3,7 +3,7 @@ import axios from "axios";
 
 export const buildDeleteModal =  (cb)=>{
     let deleteModal = $('#delete-modal');
-    if(deleteModal.length > 0)
+    if(deleteModal.length)
     {
         let targets = $('[data-tw-target="#delete-modal"]')
         targets.unbind('click')

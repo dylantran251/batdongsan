@@ -118,6 +118,11 @@ class User extends Authenticatable
         return $this->hasMany(Post::class);
     }
 
+    public function news(){
+
+        return $this->hasMany(News::class, 'user_id', 'id');
+    }
+
     public function viewedPosts(){
         return $this->belongsToMany(Post::class, 'post_viewed', 'user_id', 'post_id')->withTimestamps();
     }

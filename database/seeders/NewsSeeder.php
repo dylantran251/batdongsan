@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Faker\Factory as Faker;
 use App\Models\News;
+use DateInterval;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -41,14 +42,19 @@ class NewsSeeder extends Seeder
             "1702017724829.jpg",
         ];
         $faker = Faker::create('vi_VN'); 
+        $created_at = $faker->dateTimeBetween('2023-01-01', 'now');
+        $expired_at = clone $created_at; // Clone để tránh thay đổi đối tượng gốc
+        $expired_at->add(new DateInterval('P1M'));
         foreach($images as $image){
             News::create([
                 'user_id' => $faker->numberBetween(1, 20),
                 'title' => $faker->sentence,
                 'content' => $faker->paragraph,
-                'author' => $faker->name,
                 'avatar' => $image,
                 'description' => $faker->text(200),
+                'source' => $faker->url(),
+                'created_at' => $created_at,
+                'expired_at' => $expired_at
             ]);
         }
     }

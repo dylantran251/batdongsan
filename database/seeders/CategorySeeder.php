@@ -13,42 +13,7 @@ class CategorySeeder extends Seeder
      */
     public function run(): void
     {
-        $data = [];
-        for($i=1;$i<=3;$i++){
-            $data = [
-                [
-                    'name' => 'Căn hộ chung cư',
-                    'parent_id' => $i,
-                    'type' => 1,
-                ],
-                [
-                    'name' => 'Nhà riêng',
-                    'parent_id' => 1,
-                    'type' => 1,
-                ],
-                [
-                    'name' => 'Nhà biệt thự, liền kề',
-                    'parent_id' => $i,
-                    'type' => 1,
-                ],
-                [
-                    'name' => 'Nhà mặt phố',
-                    'parent_id' => $i,
-                    'type' => 1,
-                ],
-                [
-                    'name' => 'Shophouse, nhà phố thương mại',
-                    'parent_id' => $i,
-                    'type' => 1,
-                ],
-                [
-                    'name' => 'Bất động sản khác',
-                    'parent_id' => $i,
-                    'type' => 1,
-                ],    
-            ];
-        }
-        Category::insert([
+        $data = [
             [
                 'name' => 'Nhà đất chính chủ',
                 'parent_id' => 0,
@@ -153,8 +118,41 @@ class CategorySeeder extends Seeder
                 'parent_id' => 2,
                 'type' => 1,
             ],
-            $data
-        ]);
-
+        ];
+        for ($i = 1; $i <= 3; $i++) {
+            $data[] = [
+                'name' => 'Căn hộ chung cư',
+                'parent_id' => $i,
+                'type' => 1,
+            ];
+            $data[] = [
+                'name' => 'Nhà riêng',
+                'parent_id' => $i,
+                'type' => 1,
+            ];
+            $data[] = [
+                'name' => 'Nhà biệt thự, liền kề',
+                'parent_id' => $i,
+                'type' => 1,
+            ];
+            $data[] = [
+                'name' => 'Nhà mặt phố',
+                'parent_id' => $i,
+                'type' => 1,
+            ];
+            $data[] = [
+                'name' => 'Shophouse, nhà phố thương mại',
+                'parent_id' => $i,
+                'type' => 1,
+            ];
+            $data[] = [
+                'name' => 'Bất động sản khác',
+                'parent_id' => $i,
+                'type' => 1,
+            ];
+        }
+        foreach($data as $item){
+            Category::create($item);
+        }
     }
 }

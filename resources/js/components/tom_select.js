@@ -11,7 +11,7 @@ $(document).ready(function () {
             searchField: ['text'],
             optionClass: 'option',
             itemClass: 'item',
-            placeholder: 'Nhập gì đó VD: Nhà đất Hà Lội',
+            placeholder: 'Nhập gì đó VD: Nhà đất Hà Nội',
             create: false, 
             openOnFocus: true, 
             load: async function(query, callback) {

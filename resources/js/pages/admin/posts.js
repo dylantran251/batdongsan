@@ -1,9 +1,11 @@
 import {TabulatorFull as Tabulator} from 'tabulator-tables';
 import 'tabulator-tables/dist/css/tabulator_bulma.min.css'
 import $ from 'jquery'
+import '../../common/posts.js'
+import '../../components/editor.js'
 
+    // Get info author to user_id posts
 function getDataTable(){
-    let type = $("#posts-data-table").attr('data-type');
     const columnTblPosts = [
         { title:"Tiêu đề", field:"title"},
         { 
@@ -12,7 +14,16 @@ function getDataTable(){
             headerHozAlign: "center", 
             hozAlign: 'center', 
             width: 200,
-            formatter: infoAuthor,
+            formatter:function (cell, formatterParams, onRendered) {
+                // Access the data for the current row
+                let rowData = cell.getRow().getData();
+                // Create HTML content with combined name and image
+                let html = '<div class="overflow-hidden" style="display: flex; align-items: center; justify-content: start;">';
+                html += `<img src="${rowData.user.photo_url}" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover;">`;
+                html += '<span>' + rowData.user.name + '</span>';
+                html += '</div>';
+                return html;
+            },
         },
         { title: "Diện tích", field: "area_format", formatter: "html",  headerHozAlign: "center", hozAlign: 'center', width: 150 },
         { title: "Giá", field: "currency_format", headerHozAlign: "center",  hozAlign: 'center',  width: 120},
@@ -20,31 +31,7 @@ function getDataTable(){
         { title: "Ngày đăng", field: "created_date", headerHozAlign: "center", width: 150, hozAlign:'center' },
         { title: "Hành động", field: "actions", formatter: "html", headerHozAlign: "center", width: 150},
     ];
-    const columnTblNews = [
-        { title:"Tiêu đề", field:"title", with: 1000},
-        { 
-            title: "Người đăng", 
-            field: "user", 
-            formatter: infoAuthor,
-            width: 300,
-        },
-        { title: "Ngày đăng", field: "created_date", headerHozAlign: "center", hozAlign:'center', width: 200 },
-        { title: "Hành động", field: "actions", formatter: "html", headerHozAlign: "center", width: 200},
-    ];
-
-    // Get info author to user_id posts
-    function infoAuthor (cell, formatterParams, onRendered) {
-        // Access the data for the current row
-        let rowData = cell.getRow().getData();
-        // Create HTML content with combined name and image
-        let html = '<div class="overflow-hidden" style="display: flex; align-items: center; justify-content: start;">';
-        html += `<img src="${rowData.user.photo_url}" alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover;">`;
-        html += '<span>' + rowData.user.name + '</span>';
-        html += '</div>';
-    
-        return html;
-    }
-    const columns = (type === 'posts') ? columnTblPosts : columnTblNews;
+ 
     let table = new Tabulator("#posts-data-table", {
         layout: "fitColumns",
         resizableColumnFit: true,
@@ -57,7 +44,7 @@ function getDataTable(){
         dataSendParams: {
             "page": "page",
         },
-        columns: columns,
+        columns: columnTblPosts,
         ajaxResponse: function (url, params, response) {
             return response.data;
         },
@@ -94,7 +81,7 @@ function destroy(table) {
 }
 
 $(document).ready(function () {
-    if($('#posts-management-page').length){
+    if($('#admin-posts-page').length){
         getDataTable()
     }
 });

@@ -48,8 +48,8 @@ class LocationController extends Controller
         $data = [];
         foreach($twelve_provinces as $province){
             $quantity_posts = ($real_estate_type !== null) 
-            ? $province->posts()->where('type', 1)->where('category_id', $category_id)->where('real_estate_type', $real_estate_type)->count() 
-            : $province->posts()->where('type', 1)->where('category_id', $category_id)->count() ;
+            ? $province->posts()->where('category_id', $category_id)->where('real_estate_type', $real_estate_type)->count() 
+            : $province->posts()->where('category_id', $category_id)->count() ;
             $data[] = [
                 'province_id' => $province->id, 
                 'province_name' => $province->name, 
@@ -67,8 +67,8 @@ class LocationController extends Controller
             $dataPostsByProvince = [];
             foreach ($remaining_provinces as $province){
                 $quantity_posts = isset($data['real_estate_type']) 
-                ? $province->posts()->where('type', 1)->where('category_id', $data['category_id'])->where('real_estate_type', $data['real_estate_type'])->count() 
-                : $province->posts()->where('type', 1)->where('category_id', $data['category_id'])->count() ;
+                ? $province->posts()->where('category_id', $data['category_id'])->where('real_estate_type', $data['real_estate_type'])->count() 
+                : $province->posts()->where('category_id', $data['category_id'])->count() ;
                 $dataPostsByProvince[] = [
                     'province_id' => $province->id, 
                     'province_full_name' => $province->full_name,
@@ -88,8 +88,8 @@ class LocationController extends Controller
         $wards = Ward::where('district_id', $district_id)->get();
         $dataPostByWard = [];
         foreach($wards as $ward){
-            $quantity_posts = $ward->posts()->where('category_id', $category_id)->where('type', 1)->where('real_estate_type', $real_estate_type)->count();
-            $sub_price_average = $ward->posts->where('category_id', $category_id)->where('type', 1)->where('real_estate_type', $real_estate_type)->avg('sub_price');
+            $quantity_posts = $ward->posts()->where('category_id', $category_id)->where('real_estate_type', $real_estate_type)->count();
+            $sub_price_average = $ward->posts->where('category_id', $category_id)->where('real_estate_type', $real_estate_type)->avg('sub_price');
             $sub_price_average_format = Helper::formatCurrencyVND($sub_price_average);
             if($sub_price_average_format === 'Thỏa thuận'){
                 $sub_price_average_format = 'Chưa có dữ liệu';

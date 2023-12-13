@@ -6,6 +6,7 @@ use App\Http\Controllers\Common\KeywordController;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Location;
+use App\Models\News;
 use App\Models\Post;
 use Exception;
 use Illuminate\Http\Request;
@@ -30,11 +31,11 @@ class HomeController extends Controller
         $dataKeywordByCategory = $keywordController->dataKeywordByCategory();
 
         // Get posts is news
-        $news = Post::where('type', 0)->orderByDesc('created_at')->get();
+        $news = News::orderByDesc('created_at')->get();
         $firstNews = $news->first();
         $nextNews = $news->skip(1)->take(3);
         foreach($categoryPosts as $category){
-            $posts = $category->posts()->where('type', 1)->orderByDesc('created_at')->get();
+            $posts = $category->posts()->orderByDesc('created_at')->get();
             $postsCount = $posts->count();
             $sliderPosts = [];
             $listPosts = [];
@@ -57,7 +58,7 @@ class HomeController extends Controller
     public function loadMorePosts(Request $request){
         try{
             $category_id = $request->get('category_id');
-            $posts = Post::where('type', 1)->where('category_id', $category_id)->orderByDesc('id')->get();
+            $posts = Post::where('category_id', $category_id)->orderByDesc('id')->get();
             $count_posts = $posts->count();
             if($count_posts > 13){
                 $posts = $posts->skip(13)->take(5);

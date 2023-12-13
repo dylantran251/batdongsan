@@ -50,13 +50,13 @@ class TagController extends Controller
     public function getItems(Request $request): JsonResponse
     {
         try {
-            // $q = $request->q ?? null;
-            // $items = Tag::select();
-            // if($q)
-            // {
-            //     $items->where('name', 'LIKE', '%'.$q.'%');
-            // }
-            // $items = $items->get();
+            $q = $request->q ?? null;
+            $items = Tag::select();
+            if($q)
+            {
+                $items->where('name', 'LIKE', '%'.$q.'%');
+            }
+            $items = $items->get();
             $tags = Tag::all();
             return Response::json(['items'=>$tags]);
         }catch (Exception $exception){

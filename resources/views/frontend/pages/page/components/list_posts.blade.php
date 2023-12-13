@@ -34,7 +34,7 @@
                                     <path d="M7.11682 10.2387L7.11682 11.2" stroke="#333333" stroke-width="1.5" stroke-linecap="round"/>
                                 </svg>
                             </span>
-                            {{ $post['crency_format'] }}
+                            {{ $post->currency_format }}
                         </p>
                         <p class="text-base  flex items-center text-[#DC2D27] font-bold" style="">
                             <span class="pr-1">
@@ -45,7 +45,7 @@
                                     <path d="M12.9388 5.15262C13.0998 3.532 13.0999 2.64188 12.9388 1.09204C11.389 0.930989 10.4989 0.931081 8.87826 1.09204" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                                 </svg>
                             </span>
-                            {{ round($post['area']) }} m&#178;
+                            {!! $post->area_format !!}
                         </p>
                         <p class="text-base flex items-center" >
                             <span class="pr-1">

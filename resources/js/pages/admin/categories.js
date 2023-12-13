@@ -188,6 +188,7 @@ function getItems(){
 function resetValue(){
     $('input[name="name"]').val('');
     $('select[name="parent"]').val(0); 
+    $('select[name="parent"] option').prop('disabled', false);
     if($('#category-form .cancel-submit').length){
         $('#category-form .cancel-submit').remove();
     }

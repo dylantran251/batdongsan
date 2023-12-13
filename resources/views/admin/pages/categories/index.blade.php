@@ -10,7 +10,7 @@
             <h2 style="font-size: 25px;" class="font-bold mr-auto text-upcase">{{ $title }}</h2>
         </div>
         <div class="relative grid grid-cols-12 gap-8">
-            <div class="col-span-5 datatable-wrapper h-[70vh] p-5 mt-5 sticky left-0 top-0">
+            <div class="col-span-5 datatable-wrapper h-[70vh] p-5 mt-5 sticky left-0 top-[20%]">
                 <h1 class="font-bold text-base border-b-2 ">Thêm danh mục</h1>
                 <form id="category-form" data-url="{{ route('admin.categories.store') }}" data-method="POST">
                     @csrf

@@ -8,6 +8,7 @@ use App\Http\Controllers\Front\LocationController;
 use App\Models\Post;
 use App\Models\Category;
 use App\Models\Keyword;
+use App\Models\News;
 use App\Models\Tag;
 use App\Models\PostTag;
 use App\Models\User;
@@ -93,9 +94,9 @@ class PostController extends Controller
 
     public function postDetails($post_title){
         try{
-            $post = Post::where('type', 1)->where('title', trim($post_title) )->first();
+            $post = Post::where('title', trim($post_title) )->first();
             $title = $post->name;
-            $countPostByUser = Post::where('type', 1)->where('user_id', $post->user->id)->count();
+            $countPostByUser = Post::where('user_id', $post->user->id)->count();
             $location = 'Chưa xác định';
             // if($post->province()->name !== null &&)
             // Get keywords according to each category of posts type = 1
@@ -118,7 +119,7 @@ class PostController extends Controller
             $allWarData = $dataPostsByWard['all_data'];
             $isCheckWardData = !empty($remainingWardData) ? true : false;
             // Posts related
-            $realEstateForYou = Post::where('type', 1)->where('category_id', $post->category_id)->where('id', '!=', $post->id)->limit(8)->get();
+            $realEstateForYou = Post::where('category_id', $post->category_id)->where('id', '!=', $post->id)->limit(8)->get();
             $postsViewed = $this->addToViewed($post);
             return view('frontend.pages.posts.details.index', compact('post', 'countPostByUser', 'title', 'allWarData', 'firstEightWardData', 'dataPostsByProvince', 'menus', 'categoryPosts', 'dataKeywordByCategory', 'realEstateForYou', 'realEstateTypes', 'isCheckWardData', 'postsViewed'));
         }catch(Exception $e){
@@ -315,7 +316,7 @@ class PostController extends Controller
     }
 
     protected function addToViewed($post){
-        $postsViewed = Post::where('type', 1)->inRandomOrder()->limit(8)->get();
+        $postsViewed = Post::inRandomOrder()->limit(8)->get();
         if (Auth::check()) {
             $user = Auth::user();
             $hasViewedPost = $user->viewedPosts()->where('post_id', $post->id)->exists();
@@ -341,9 +342,9 @@ class PostController extends Controller
         $keywordController = new KeywordController();
         $dataKeywordByCategory = $keywordController->dataKeywordByCategory();
 
-        $news = Post::where('type', 0)->where('title', $news_title)->first();
+        $news = News::where('title', $news_title)->first();
         $title = $news->title;
-
+        // dd($news->content);
         $this->addToViewed($news);
         return view('frontend.pages.news.show', compact('title', 'menus', 'dataKeywordByCategory', 'news'));
     }

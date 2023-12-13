@@ -34,7 +34,7 @@ class FrontendController extends Controller
             $dataPostsByProvince = $locationController->dataPostsByProvince($category->id, null);
             // 
             $title = $category->name;
-            $posts = $category->posts()->orderByDesc('vip')->orderByDesc('created_at')->where('type', 1);
+            $posts = $category->posts()->orderByDesc('vip')->orderByDesc('created_at');
             $postsCount = $posts->count();
             $posts = $posts->paginate(8);
 
@@ -61,7 +61,7 @@ class FrontendController extends Controller
         $realEstateTypes = Category::where('parent_id', '<', 0)->orWhere('parent_id', $category->id)->where('type', 1)->get();
         $title = "Tìm kiếm ". $category_name;
         // Get posts by category
-        $posts = $category->posts()->where('type', 1);
+        $posts = $category->posts();
         // dd($posts->count());
         $check_request = false;
 
@@ -71,6 +71,7 @@ class FrontendController extends Controller
         }
 
         if(isset($data['location'])){
+            
             // Cup location => province, dítrict, ward
             $location = explode(', ', $data['location']);
             $province_name = trim($location[count($location)-1]);
@@ -78,16 +79,17 @@ class FrontendController extends Controller
             $ward_name = (count($location)-3 >= 0) ? trim($location[count($location)-3]) : '';
             // Exists province, district and ward get posts by ward
            if($province_name !== "" && $district_name !== "" && $ward_name !== ""){
-                $ward = Ward::where('name', $ward_name)->first();
+                $ward = Ward::where('full_name', $ward_name)->first();
                 $posts = $posts->where('ward_id', $ward->id);
            }elseif($province_name !== "" && $district_name !== "" && $ward_name === ""){
-                $district = District::where('name', $district_name)->first();
+                $district = District::where('full_name', $district_name)->first();
                 $posts = $posts->where('district_id', $district->id);
            }elseif($province_name !== "" && $district_name === "" && $ward_name === ""){
-                $province = Province::where('name', $province_name)->first();
+                $province = Province::where('full_name', $province_name)->first();
                 $posts = $posts->where('province_id', $province->id);
            }
            $check_request = true;
+           
         }
 
         if(isset($data['price-range'])){

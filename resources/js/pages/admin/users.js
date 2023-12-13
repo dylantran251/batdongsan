@@ -22,7 +22,6 @@ function dataTable(){
             { 
                 title: "Người dùng", 
                 field: "name", 
-                headerHozAlign: "center",
                 hozAlign: 'center',
                 formatter: function (cell, formatterParams, onRendered) {
                     // Access the data for the current row
@@ -62,6 +61,8 @@ function dataTable(){
             e.preventDefault();
             $('#delete-modal').addClass('modal-delete-user');
             $('.modal-delete-user #delete-form').attr('data-url', $(this).attr('data-url'));
+            $("#crud-user-modal form").find('.password-container').remove();
+            $("#crud-user-modal form").find('.password_confirmation-container').remove();
             destroy(table)
         })
     })

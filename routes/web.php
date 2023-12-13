@@ -1,8 +1,8 @@
 <?php
 // admin
 use App\Http\Controllers\Admin\AdminController;
-// use App\Http\Controllers\Admin\CategoryControllerAdmin as CategoryControllerAdminAdmin;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\NewsController;
 use App\Http\Controllers\Admin\TagController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Admin\PostController as AdminPost;
@@ -27,6 +27,7 @@ use App\Http\Controllers\Common\CategoryController;
 use App\Http\Controllers\Common\TagController as FrontendTag;
 use App\Http\Controllers\Common\UploadController;
 use App\Models\Category;
+use App\Models\News;
 
 /*
 |--------------------------------------------------------------------------
@@ -71,20 +72,21 @@ Route::group(['prefix'=>'admin','as'=>'admin.', 'middleware' => 'auth'], functio
         });
 
         Route::group(['prefix'=>'posts', 'as'=> 'posts.'], function (){
-           Route::get('/', [AdminPost::class, 'listPosts'])->name('index');
-           Route::get('{post}/get-items', [AdminPost::class, 'getItems'])->name('getItems');
-           Route::get('{post}/get-item', [AdminPost::class, 'getItem'])->name('getItem');
-           Route::get('create', [AdminPost::class, 'createPosts'])->name('create');
-           Route::post('store', [AdminPost::class, 'store'])->name('store');
-           Route::get('{post}/edit', [AdminPost::class, 'edit'])->name('edit');
-           Route::put('{post}/update', [AdminPost::class, 'update'])->name('update');
-           Route::delete('{post}/destroy', [AdminPost::class, 'destroy'])->name('destroy');
+            Route::resource('/', AdminPost::class);
+            Route::get('/get-items', [AdminPost::class, 'getItems'])->name('get-items');
+            Route::get('/get-item', [AdminPost::class, 'getItem'])->name('get-item');
         });
 
         Route::group(['prefix'=>'news', 'as'=> 'news.'], function (){
-            Route::get('/', [AdminPost::class, 'listNews'])->name('index');
-            Route::get('/create', [AdminPost::class, 'createNews'])->name('create');
+            Route::get('/', [NewsController::class, 'index'])->name('index');
+            Route::get('/create', [NewsController::class, 'create'])->name('create');
+            Route::post('/store', [NewsController::class, 'store'])->name('store');
+            Route::get('/edit/{news}', [NewsController::class, 'edit'])->name('edit');
+            Route::put('/update/{news}', [NewsController::class, 'update'])->name('update');
+            Route::delete('/destroy/{news}', [NewsController::class, 'destroy'])->name('destroy');
+            Route::get('/get-items', [NewsController::class, 'getItems'])->name('get-items');
         });
+
         Route::group(['prefix'=>'categories', 'as'=> 'categories.'], function (){
             Route::get('/', [CategoryController::class, "index"])->name('index');
             Route::get('/get-items', [CategoryController::class, 'getItems'])->name('get-items');

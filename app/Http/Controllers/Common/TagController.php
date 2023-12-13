@@ -15,7 +15,7 @@ class TagController extends Controller
         $categories = Category::where('type', 1)->where('parent_id', 0)->get();
         $data = [];
         foreach($categories as $category){
-            $tags = $category->posts()->where('type', 1)->with('tags')->get()
+            $tags = $category->posts()->with('tags')->get()
             ->flatMap(function ($post) {
                 return $post->tags;
             });

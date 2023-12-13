@@ -1,6 +1,6 @@
 import $ from 'jquery'
 import Dropzone from 'dropzone';
-export function dropzone(){
+function dropzone(){
     let UpdateInputImages = function (file) {
         let container = $('.image-container');
         let response = file.xhr.response;
@@ -48,7 +48,9 @@ export function dropzone(){
             }
         });
     });
+
 }
 $(document).ready(function () {
     dropzone()
+    
 })

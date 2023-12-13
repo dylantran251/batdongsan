@@ -26,6 +26,7 @@ class LocationSeeder extends Seeder
                 'full_name' => $province->name,
                 'name' => str_replace(['Thành phố ', 'Tỉnh '], '', $province->name),
             ]);
+            dump($province->name);
         }
 
         $json_path_districts = public_path('json/districts.json');
@@ -38,6 +39,7 @@ class LocationSeeder extends Seeder
                 'full_name' => $district->name,
                 'name' => str_replace(['Quận ', 'Huyện ', 'Thị xã ', 'Thành phố '], '', $district->name),
             ]);
+            dump($district->name);
         }
 
         $json_path_wards = public_path('json/wards.json');
@@ -51,5 +53,6 @@ class LocationSeeder extends Seeder
                 'name' => str_replace(['Xã ', 'Phường ', 'Thị trấn '], '', $ward->name),
             ]);
         }
+        dump($ward->name);
     }
 }

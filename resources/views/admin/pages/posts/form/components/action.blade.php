@@ -14,7 +14,7 @@
             Nháp
         </button>
         <button type="button" id="submit-form" 
-        class="focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-bold rounded-lg text-base px-10 py-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
+        class="submit-form focus:outline-none text-white bg-red-700 hover:bg-red-800 focus:ring-4 focus:ring-red-300 font-bold rounded-lg text-base px-10 py-3 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-900">
             Đăng tin
         </button>
     </div>

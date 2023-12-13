@@ -12,7 +12,7 @@ class KeywordController extends Controller
         $categories = Category::where('type', 1)->where('parent_id', 0)->get();
         $data = [];
         foreach($categories as $category){
-            $keywords = $category->posts()->where('type', 1)->with('keywords')->get()
+            $keywords = $category->posts()->with('keywords')->get()
             ->flatMap(function ($post) {
                 return $post->keywords;
             });
