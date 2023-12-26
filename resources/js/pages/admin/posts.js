@@ -71,6 +71,7 @@ function destroy(table) {
             },
             success: function(response){
                 fireToast('success', 'Thành công', response.message);
+                // $('#delete-modal').removeClass('show');
                 table.replaceData();
             },
             error: function(message){

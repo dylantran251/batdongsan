@@ -165,9 +165,6 @@ Route::middleware('web')->group(function(){
         Route::get('{category_name}/tim-kiem', 'searchPosts')->name('search');
         Route::get('/{category_name}', 'loadPage')->name('loadPage');
     });
-
-
-
 });
 
 

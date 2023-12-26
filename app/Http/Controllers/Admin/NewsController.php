@@ -46,15 +46,12 @@ class NewsController extends Controller
     {
         try {
             $tagIds = [];
-            // Kiểm tra tồn tại của 'tags'
             if (!empty($tagNames)) {
                 foreach ($tagNames as $tagName) {
                     $tag = Tag::firstOrCreate(['name' => $tagName]);
                     $tagIds[] = $tag->id;
                 }
-            }
-            if (!empty($tagIds)) {
-                $news->tags()->sync($tagIds);
+                $news->tags()->syncWithoutDetaching($tagIds);
             }
         } catch (\Exception $e) {
             Log::error($e->getMessage());
@@ -68,13 +65,11 @@ class NewsController extends Controller
             $data = $request->all();
             $data['user_id'] = Auth::user()->id;
             $data['created_at'] = Carbon::now();
-            $tagNames = [];
             if(isset($data['tags'])){
-                $tagName = $data['tags'];
                 unset($data['tags']);
             }
             $news = News::create($data);
-            $this->syncTagsNews($news, $tagNames);
+            $this->syncTagsNews($news, $request->tags);
             return Response::json([
                 'message' => 'Đã tạo mới tin tức', 
                 'url' => route('admin.news.index')
@@ -89,7 +84,8 @@ class NewsController extends Controller
         try{
             $title = "Cập nhật tin tức";
             $categories = Category::where('parent_id', 0)->get();
-            return view('admin.pages.news.create', compact('news', 'title', 'categories'));
+            $tags = $news->tags()->get();
+            return view('admin.pages.news.create', compact('news', 'title', 'categories', 'tags'));
         }catch(Exception $e){
             return Response::json(['error' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
         }
@@ -100,9 +96,9 @@ class NewsController extends Controller
             $data = $request->all();
             $data['updated_at'] = Carbon::now();
             $news->update($data);
+            $this->syncTagsNews($news, $request->tags);
             return Response::json([
                 'message' => 'Đã cập nhật tin tức', 
-                'data' => $data,
                 'url' => route('admin.news.index')
             ], 200);
         }catch(Exception $e){
@@ -115,6 +111,7 @@ class NewsController extends Controller
             if (File::exists(public_path('uploads/'.$news->avatar))) {
                 File::delete(public_path('uploads/'.$news->avatar));
             }
+            $news->tags()->detach();
             $news->delete();
             return Response::json(['message' => 'Đã xóa tin tức', ], 200);
         }catch(Exception $e){

@@ -4,6 +4,7 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\MorphToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -110,7 +111,7 @@ class User extends Authenticatable
 
     public function logsSupport()
     {
-        return $this->hasMany(LogsSupport::class);
+        return $this->hasMany(LogSupport::class);
     }
 
     public function posts()
@@ -123,8 +124,14 @@ class User extends Authenticatable
         return $this->hasMany(News::class, 'user_id', 'id');
     }
 
-    public function viewedPosts(){
-        return $this->belongsToMany(Post::class, 'post_viewed', 'user_id', 'post_id')->withTimestamps();
+    public function viewedPosts(): MorphToMany
+    {
+        return $this->morphedByMany(Post::class, 'viewable');
+    }
+
+    public function viewedNews(): MorphToMany
+    {
+        return $this->morphedByMany(News::class, 'viewable');
     }
 
     public function favoritePosts(){

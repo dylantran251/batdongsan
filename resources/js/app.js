@@ -10,7 +10,6 @@ import './pages/admin/categories.js'
 // 
 import './pages/admin/posts.js'
 import './pages/admin/news.js'
-import './pages/admin/posts/form.js'
 
 // 
 

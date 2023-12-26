@@ -1,13 +1,13 @@
 {
-  "_dropzone-e51aac31.js": {
+  "_posts-0db267f1.js": {
     "css": [
-      "assets/dropzone-d5b9b975.css"
+      "assets/posts-d5b9b975.css"
     ],
-    "file": "assets/dropzone-e51aac31.js"
+    "file": "assets/posts-0db267f1.js"
   },
-  "dropzone.css": {
-    "file": "assets/dropzone-d5b9b975.css",
-    "src": "dropzone.css"
+  "posts.css": {
+    "file": "assets/posts-d5b9b975.css",
+    "src": "posts.css"
   },
   "resources/css/app.css": {
     "file": "assets/app-179954eb.css",
@@ -24,24 +24,24 @@
     "src": "resources/images/bg-login-page.svg"
   },
   "resources/js/app.css": {
-    "file": "assets/app-83b9ea77.css",
+    "file": "assets/app-00fe570b.css",
     "src": "resources/js/app.css"
   },
   "resources/js/app.js": {
     "css": [
-      "assets/app-83b9ea77.css"
+      "assets/app-00fe570b.css"
     ],
-    "file": "assets/app-3be47dd3.js",
+    "file": "assets/app-e5fb072f.js",
     "imports": [
-      "_dropzone-e51aac31.js"
+      "_posts-0db267f1.js"
     ],
     "isEntry": true,
     "src": "resources/js/app.js"
   },
   "resources/js/pages/frontend/app.js": {
-    "file": "assets/app-102caa3e.js",
+    "file": "assets/app-4077832c.js",
     "imports": [
-      "_dropzone-e51aac31.js"
+      "_posts-0db267f1.js"
     ],
     "isEntry": true,
     "src": "resources/js/pages/frontend/app.js"

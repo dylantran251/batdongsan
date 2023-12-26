@@ -4,8 +4,10 @@
             <ul class="splide__list">
                 @if(!empty($post->getImages()))
                     @foreach ($post->getImages() as $image)
-                        <li class="splide__slide w-full flex items-center justify-center relative overflow-hidden h-[540px] rounded-lg">                   
-                            <img src="{{ asset('uploads/'.$image) }}" class="object-contain w-full h-[550px] rounded-lg z-[2]" alt="">
+                        <li class="splide__slide w-full flex items-center justify-center relative overflow-hidden h-[540px] rounded-lg"> 
+                            <div class="max-w-[860px] max-h-[470px]">
+                                <img src="{{ asset('uploads/'.$image) }}" class="object-cover min-w-[860px] h-[470px] rounded-lg z-[2]" alt="">
+                            </div>                  
                             <div class="absolute inset-0 opacity-50 z-[1] bg-gray-400 blur-sm rounded-lg"></div>                                                          
                         </li>
                     @endforeach                                                  

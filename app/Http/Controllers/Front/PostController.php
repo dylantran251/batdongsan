@@ -7,7 +7,6 @@ use App\Http\Controllers\Controller;
 use App\Http\Controllers\Front\LocationController;
 use App\Models\Post;
 use App\Models\Category;
-use App\Models\Keyword;
 use App\Models\News;
 use App\Models\Tag;
 use App\Models\PostTag;
@@ -36,16 +35,16 @@ class PostController extends Controller
 
     public function create(){
         $title = "Đăng tin";
-        $menus = Category::where('parent_id', 0)->get();
+        $fiveMenus = Category::where('parent_id', 0)->take(5)->get();
         $customer = auth()->user();
-        $categories = $menus->where('type', 1)->where('parent_id', 0);
+        $categories = $fiveMenus->where('type', 1)->where('parent_id', 0);
         $realEstateTypes= Category::where('parent_id', '<', 0)->orWhere('parent_id', 1)->get();
 
         $tags = Tag::all();
 
         $keywordController = new KeywordController();
         $dataKeywordByCategory = $keywordController->dataKeywordByCategory();
-        return view('frontend.pages.posts.crud.index', compact('title', 'customer', 'categories', 'tags', 'menus', 'dataKeywordByCategory', 'realEstateTypes'));
+        return view('frontend.pages.posts.crud.index', compact('title', 'customer', 'categories', 'tags', 'fiveMenus', 'dataKeywordByCategory', 'realEstateTypes'));
     }
 
     public function syncPostTag(Request $request, $name){
@@ -103,11 +102,11 @@ class PostController extends Controller
             $keywordController = new KeywordController();
             $dataKeywordByCategory = $keywordController->dataKeywordByCategory();
             // Menu navbar
-            $menus = Category::where('parent_id', 0)->get();
+            $fiveMenus = Category::where('parent_id', 0)->take(5)->get();
             // Select option category search bar
-            $categoryPosts = $menus->where('type', 1);
+            $categoriesPost = $fiveMenus->where('type', 1);
             // Real estate type according to category of this post current 
-            $realEstateTypes = Category::where('parent_id' , '<', 0)->orWhere('parent_id', $post->category_id)->get();
+            $realEstateTypes = Category::where('parent_id', $post->category_id)->get();
             // LocationConTroller
             $locationController = new LocationController();
             // Province data and posts data for each province
@@ -121,7 +120,8 @@ class PostController extends Controller
             // Posts related
             $realEstateForYou = Post::where('category_id', $post->category_id)->where('id', '!=', $post->id)->limit(8)->get();
             $postsViewed = $this->addToViewed($post);
-            return view('frontend.pages.posts.details.index', compact('post', 'countPostByUser', 'title', 'allWarData', 'firstEightWardData', 'dataPostsByProvince', 'menus', 'categoryPosts', 'dataKeywordByCategory', 'realEstateForYou', 'realEstateTypes', 'isCheckWardData', 'postsViewed'));
+            //  return $this->addToViewed($post);
+            return view('frontend.pages.posts.details.index', compact('title', 'post', 'categoriesPost', 'firstEightWardData', 'isCheckWardData', 'realEstateForYou', 'fiveMenus', 'postsViewed', 'allWarData', 'dataPostsByProvince', 'dataKeywordByCategory'));
         }catch(Exception $e){
             toastr()->error('Lỗi', 'Có lỗi xảy ra');
         }
@@ -153,112 +153,6 @@ class PostController extends Controller
             "value_properties" => 'required',
             // 'tags' => 'nullable'
         ];
-        if(empty($request->input('oldImages'))){
-            $rules['newImages'] = 'required'; 
-        }
-        elseif(empty($request->file('newImages'))){
-            $rules['oldImages'] = 'required' ;
-        }
-        else{
-            $rules['oldImages'] = 'required' ;
-            $rules['newImages'] = 'required'; 
-        }
-        $messages = [
-            "required" => ":attributes không được để trống",
-            "numeric" => ":attributes phải là số.",
-        ];
-        $validator = Validator::make($request->all(), $rules, $messages);
-        if ($validator->fails()) {
-            return redirect()->back()->withErrors($validator)->withInput();
-        }
-
-        // Lấy ra mảng images của post và request mảng images của post từ input hidden
-        // So sánh hai mảng lấy ra những path ảnh không trùng lặp và xóa nó 
-        try{
-            $imagesInit = $post->getImages();
-            $oldImages = $request->input('oldImages');
-            $newImages = [];
-            if(!empty($imagesInit)){
-                $diffImages = array_diff($imagesInit, $oldImages);
-                if(!empty($diffImages)){
-                    foreach($diffImages as $image){
-                        $path = public_path('images/posts/' . $image);   
-                        if (File::exists($path)) {
-                            File::delete($path); 
-                        }
-                    }   
-                }
-            }
-            // Nếu tồn tại $request này là user đã tải thêm ảnh mới và gộp mảng images mới này với images cũ  
-            if($request->hasFile('newImages')){
-                $uploadImages = $request->file('newImages');
-                foreach($uploadImages as $image){
-                    $path = Str::uuid() . '.' . $image->getClientOriginalExtension();
-                    $image->move(public_path('/images/posts') , $path);
-                    $newImages[] = $path ;
-                }
-            }
-            // dd($oldImages, $newImages);
-            $mergerImages = array_merge($oldImages, $newImages);
-            $jsonImages = json_encode($mergerImages);
-    
-            $ortherProperties = [];
-            for($i = 0; $i < count($request->input('value_properties')); $i++){
-                $ortherProperties[] = [
-                    'name' => $request->input('name_properties')[$i],
-                    'value' => $request->input('value_properties')[$i]
-                ];
-            }
-            $jsonOtherProperties = json_encode($ortherProperties, JSON_UNESCAPED_UNICODE);
-            
-            $post->update([
-                "title" => $request->input('title'),
-                "type" => 1,
-                "status" => 1,
-                "short_description" => $request->input('short_description'),
-                "description" => $request->input('description'),
-                "price" => $request->input('price'),
-                "area" => $request->input('area'),
-                "sub_price" => $request->input('sub_price'),
-                "floors" => $request->input('floor'),
-                "bedroom" => $request->input('bedroom'),
-                "toilet" => $request->input('toilet'),
-                "location" => $request->input('location'),
-                "other_properties" => $jsonOtherProperties,
-                "images" => $jsonImages,
-                'real_estate_type' => 1,
-                'updated_at' => Carbon::now(),
-            ]);
-    
-            // Cập nhật lại danh mục 
-            $categories = $post->categories()->get();
-            $categoriesID = [];
-            foreach($categories as $category) $categoriesID[] = $category['id'];
-
-    
-            $tags = $post->tags()->get();
-            $tagsID = [];
-            foreach($tags as $tag) $tagsID[] = $tag['id'];
-            if($request->input('tags')){
-                $diffTagsID = array_diff($tagsID, $request->input('tags'));
-                foreach($diffTagsID as $tagID){
-                    $PostTag = PostTag::where('post_id', $post['id'])->where('tag_id', $tagID)->first();
-                    $PostTag->delete();
-                }
-                foreach($request->input('tags') as $tagID){
-                    $PostTag = PostTag::where('post_id', $post['id'])->where('category_id', $tagID)->first();
-                    if($PostTag == null){
-                        PostTag::create([
-                            'post_id' => $post['id'],
-                            'tag_id' => $$tagID
-                        ]);
-                    }
-                }
-            }
-            return Response::json(['message' => 'Bài đăng đã được cập nhật!']);
-        }catch(Exception $exception){
-            return Response::json(['message'=> $exception->getMessage()], 500);
-        }
     }
 
     public function destroy(Post $post){
@@ -266,19 +160,12 @@ class PostController extends Controller
         $tags = $post->tags()->get();
 
         // Xóa tag
-        if($tags){
-            foreach($tags as $tag){
-                $PostTag = PostTag::where('post_id', $post['id'])->where('tag_id', $tag['id'])->first();
-                if($PostTag){
-                    $PostTag->delete();
-                }
-            }            
-        }
+        $post->tags()->detach();
         // Xóa ảnh 
         if(!empty($post['images'])){
             $images = json_decode($post['images']);
             foreach($images as $image){
-                $path = public_path('images/posts/' . $image);   
+                $path = public_path('uploads/' . $image);   
                 if (File::exists($path)) {
                     File::delete($path); 
                 }
@@ -316,29 +203,30 @@ class PostController extends Controller
     }
 
     protected function addToViewed($post){
-        $postsViewed = Post::inRandomOrder()->limit(8)->get();
-        if (Auth::check()) {
-            $user = Auth::user();
-            $hasViewedPost = $user->viewedPosts()->where('post_id', $post->id)->exists();
-            $postsViewed = $user->viewedPosts()->where('post_id', '!=', $post->id)->get();
-            if (!$hasViewedPost) {
-                $user->viewedPosts()->attach($post->id);
+        try{
+            $postsViewed = Post::inRandomOrder()->limit(8)->get();
+            if (Auth::check()) {
+                $user = Auth::user();
+                $postsViewed = $user->viewedPosts()->where('viewable_id', '!=', $post->id)->get();
+                $user->viewedPosts()->syncWithoutDetaching($post->id);
             }
+            return $postsViewed;
+        }catch(Exception $e){
+            return Response::json(['message' => 'Đã xảy ra lỗi '.$e->getMessage()]);
         }
-        return $postsViewed;
     }
 
     // News
     public function listNews(){
         $title = "Tin tức";
-        $menus = Category::where('parent_id', 0)->get();
+        $fiveMenus = Category::where('parent_id', 0)->take(5)->get();
         $keywordController = new KeywordController();
         $dataKeywordByCategory = $keywordController->dataKeywordByCategory();
-        return view('frontend.pages.news.index', compact('title', 'menus', 'dataKeywordByCategory'));
+        return view('frontend.pages.news.index', compact('title', 'fiveMenus', 'dataKeywordByCategory'));
     }
 
     public function detailNews(Request $request, $news_title){
-        $menus = Category::where('parent_id', 0)->get();
+        $fiveMenus = Category::where('parent_id', 0)->take(5)->get();
         $keywordController = new KeywordController();
         $dataKeywordByCategory = $keywordController->dataKeywordByCategory();
 
@@ -346,7 +234,7 @@ class PostController extends Controller
         $title = $news->title;
         // dd($news->content);
         $this->addToViewed($news);
-        return view('frontend.pages.news.show', compact('title', 'menus', 'dataKeywordByCategory', 'news'));
+        return view('frontend.pages.news.show', compact('title', 'fiveMenus', 'dataKeywordByCategory', 'news'));
     }
 }
  

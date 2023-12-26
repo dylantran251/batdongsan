@@ -2,12 +2,12 @@
     <div class="flex items-start gap-8">
         <div class="flex flex-col gap-1">
             <p  style="font-size: 14px; color:#999999">Mức giá</p>
-            <h4 class="font-bold text-[18px] text-[#2c2c2c]">{{ $post->getCurrencyFormatAttribute() }}</h4>
-            <p class="text-[#505050] text-[12px]">{{ $post->shortenSubPrice() }}/m&#178;</p>
+            <h4 class="font-bold text-[18px] text-[#2c2c2c]">{{ $post->currency_format }}</h4>
+            <p class="text-[#505050] text-[12px]">{{ $post->sub_currency_format }}/m&#178;</p>
         </div>
         <div class="flex flex-col gap-1">
             <p  style="font-size: 14px; color:#999999">Diện tích</p>
-            <h4 class="font-bold text-[18px] text-[#2c2c2c]">{!! $post->getAreaFormatAttribute() !!}</h4>
+            <h4 class="font-bold text-[18px] text-[#2c2c2c]">{!! $post->area_format !!}</h4>
             <p class="text-[#505050] text-[12px]">{{ $post['floors'] }} tầng</p>
         </div>
         <div class="flex flex-col gap-1">

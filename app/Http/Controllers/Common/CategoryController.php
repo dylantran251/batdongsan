@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Common;
 use App\Http\Controllers\Controller;
 use App\Models\Category;
 use App\Models\Post;
+use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Response;
@@ -23,7 +24,7 @@ class CategoryController extends Controller
 
     public function getItems(Request $request){
         try{
-            $categories = Category::where('parent_id', 0)->with('_children')->get();
+            $categories = Category::where('parent_id', 0)->orderByDesc('created_at')->with('_children')->get();
             return Response::json(['data' => $categories], 200);
         }catch(Exception $e){
             return Response::json(['message' => 'Đã xảy ra lỗi '.$e->getMessage()], 500);
@@ -47,6 +48,7 @@ class CategoryController extends Controller
             if ($validator->fails()) {
                 return Response::json(['errors' => $validator->errors()], 422);
             }
+            $data['created_at'] = Carbon::now();
             Category::create($data);
             return Response::json(['success' => 'Đã thêm mới danh mục' ], 200);
         }catch(Exception $e){

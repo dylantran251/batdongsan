@@ -1,17 +1,17 @@
 @foreach ($posts as $post)
-    <div class="flex flex-col shadow">
+    <div class="flex flex-col shadow mb-4">
         <div class="">
-            <div class="flex w-full rounded-t h-[300px] sm:h-[450px]">
-                <div class="relative w-2/3 h-full">
-                    <img class="h-[300px] sm:h-[450px] w-full object-cover border" src="{{ (!empty($post->getAvatar(0))) ? asset('uploads/'.$post->getAvatar(0)) : asset('dist/images/preview-1.jpg')}}" alt="">
-                    <span class="absolute" style="top: 5%; left: -1%;">
+            <div class="flex w-full rounded-t h-[280px]">
+                <div class="max-w-[600px] relative">
+                    <img class="h-[280px] min-w-[600px] object-cover border" src="{{ (!empty($post->getAvatar(0))) ? asset('uploads/'.$post->getAvatar(0)) : asset('dist/images/preview-1.jpg')}}" alt="">
+                    <span class="absolute" style="top: 6%; left: -1%;">
                         <svg class="relative" width="125" height="32" viewBox="0 0 125 32" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path fill-rule="evenodd" clip-rule="evenodd" d="M5 0C2.23858 0 0 2.23858 0 5V20C0 21.1275 0.373217 22.1679 1.00285 23.0043L7 32V25H120C122.761 25 125 22.7614 125 20V5C125 2.23858 122.761 0 120 0H5Z" fill="#DC2D27"/>
-                            <text x="55%" y="45%" text-anchor="middle" alignment-baseline="middle" font-size="16" fill="white" style="text-transform: uppercase;">{{ $post->getVip() }}</text>
+                            <text x="55%" y="45%" text-anchor="middle" alignment-baseline="middle" font-size="14" fill="white" style="text-transform: uppercase;">{{ $post->vip_text }}</text>
                         </svg>
                     </span>
                 </div>
-                <div class="w-full md:w-1/3 flex flex-col">
+                <div class="flex flex-col w-full">
                     <img class="w-full h-1/2 md:w-auto object-cover border" src="{{ (!empty($post->getAvatar(1))) ? asset('uploads/'.$post->getAvatar(1)) : asset('dist/images/preview-1.jpg')}}" alt="">
                     <div class="flex h-1/2">
                         <img src="{{ (($post->getAvatar(2))) ? asset('uploads/'.$post->getAvatar(2)) : asset('dist/images/preview-1.jpg')}}" class="w-1/2 border object-cover" alt="">
@@ -20,11 +20,11 @@
                 </div>
             </div>
             {{-- Post info --}}
-            <div class="p-4 text-black border">
+            <div class="px-2.5 py-4 text-black border">
                 <a href="{{ route('posts.details', $post['title']) }}" href="javascript:void(0)" class="link-post-details">
-                    <h1 class="title  uppercase text-base color-fiery-red font-bold text-[#DC2D27]">{{ $post['title'] }}</h1>
-                    <div class="flex items-center my-5 gap-5 flex-wrap gap-10 justify-between lg:justify-start">
-                        <p class="text-base  flex items-center text-[#DC2D27] font-bold" style="">
+                    <h1 class="title  uppercase text-[14px] color-fiery-red font-bold text-[#DC2D27] mb-4">{{ $post['title'] }}</h1>
+                    <div class="flex items-center mb-4 gap-5 flex-wrap gap-12 justify-between lg:justify-start px-2 text-[14px]">
+                        <p class=" flex items-center text-[#DC2D27] font-bold" style="">
                             <span class="pr-1">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M6.99999 3.64C5.52488 3.64 3.98293 3.64 2.69032 3.87101C2.07073 3.98175 1.58263 4.4549 1.4496 5.07009C1.23999 6.03945 1.23999 6.94366 1.23999 8.32C1.23999 9.69634 1.23999 10.6005 1.4496 11.5699C1.58263 12.1851 2.07073 12.6583 2.69032 12.769C3.98293 13 5.52488 13 6.99999 13C8.4751 13 10.0171 13 11.3097 12.769C11.9293 12.6583 12.4174 12.1851 12.5504 11.5699C12.76 10.6005 12.76 9.69634 12.76 8.32C12.76 6.94366 12.76 6.03945 12.5504 5.07009C12.4174 4.4549 11.9293 3.98175 11.3097 3.87101C10.0171 3.64 8.4751 3.64 6.99999 3.64Z" stroke="#333333" stroke-width="1.5"/>
@@ -36,7 +36,7 @@
                             </span>
                             {{ $post->currency_format }}
                         </p>
-                        <p class="text-base  flex items-center text-[#DC2D27] font-bold" style="">
+                        <p class=" flex items-center text-[#DC2D27] font-bold" style="">
                             <span class="pr-1">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8.53082 5.49999L12.9353 1.0955" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -47,7 +47,7 @@
                             </span>
                             {!! $post->area_format !!}
                         </p>
-                        <p class="text-base flex items-center" >
+                        <p class="flex items-center" >
                             <span class="pr-1">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M3.02259 12.8108C4.29799 12.9789 5.6299 13.1924 6.99992 13.1924C8.36994 13.1924 9.70184 12.9789 10.9772 12.8108C11.4843 12.7439 11.8702 12.3146 11.8702 11.8032V2.19678C11.8702 1.68533 11.4843 1.25607 10.9772 1.18921C9.70184 1.02104 8.36994 0.807556 6.99992 0.807556C5.6299 0.807556 4.298 1.02104 3.02259 1.18921C2.51554 1.25607 2.12964 1.68533 2.12964 2.19678V11.8032C2.12964 12.3146 2.51554 12.7439 3.02259 12.8108Z" fill="white" stroke="#333333" stroke-width="1.5" stroke-linejoin="round"/>
@@ -57,7 +57,7 @@
                             </span>
                             {{ $post['bedroom'] }}
                         </p>
-                        <p class="text-base flex items-center" >
+                        <p class="flex items-center" >
                             <span class="pr-1">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M12.75 5.25L7.75 5.25" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -67,7 +67,7 @@
                             </span>
                             {{ $post['toilet'] }}
                         </p>
-                        <p class="text-base flex items-center">
+                        <p class="flex items-center">
                             <span class="pr-1">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M2.2481 12.0367C2.282 12.5182 2.6607 12.9034 3.14169 12.9437C5.78943 13.1657 8.21057 13.1657 10.8583 12.9437C11.3393 12.9034 11.718 12.5182 11.7519 12.0367C11.9577 9.11339 11.9577 6.35152 11.7519 3.42818C11.718 2.94669 11.3394 2.56268 10.8603 2.50382C9.62298 2.35181 8.33015 2.15625 7 2.15625C5.66985 2.15625 4.37702 2.35181 3.13967 2.50382C2.66059 2.56268 2.28199 2.94669 2.2481 3.42818C2.0423 6.35152 2.0423 9.11338 2.2481 12.0367Z" fill="white"/>
@@ -79,7 +79,7 @@
                             </span>
                             {{ $post['legal_documents'] }}
                         </p>
-                        <p class="hidden text-base sm:flex items-center" >
+                        <p class="hidden sm:flex items-center" >
                             <span class="pr-1">
                                 <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M6.99992 11.2379C9.34047 11.2379 11.2379 9.34055 11.2379 6.99999C11.2379 4.65944 9.34047 2.76204 6.99992 2.76204C4.65936 2.76204 2.76196 4.65944 2.76196 6.99999C2.76196 9.34055 4.65936 11.2379 6.99992 11.2379Z" stroke="#333333" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
@@ -96,22 +96,22 @@
                 </a>
             </div>
             {{-- Author info --}}
-            <div class="grid grid-cols-3 sm:flex items-center gap-2 sm:justify-between rounded-b border mt-[-1px] p-4">
+            <div class="grid grid-cols-3 sm:flex items-center gap-2 sm:justify-between rounded-b border mt-[-1px] px-3 py-2">
                 <a href="{{ route('posts.posts-by-user', $post->user['id']) }}" class="col-span-2 flex items-center">
                     <div class="col-span-2 flex items-center jusstify-between ">
-                        <div class="h-10 w-10">
-                            <img src="{{ ($post->user['avatar']) ? asset('uploads/'.$post->user['avatar']) : asset('dist/images/preview-1.jpg') }}" class="w-full h-full rounded-full object-cover" alt="">
+                        <div class="h-[46px] w-[46px]">
+                            <img src="{{ $post->user->avatar }}" class="w-full h-full rounded-full object-cover" alt="">
                         </div>
                         <div class="flex flex-col text-base ml-3">
                             <h1 class="text-black font-bold">{{ $post->user['name'] }}</h1>
-                            <p style="color: #9C9C9C;">Đăng {{ $post->dateDifference() }}</p>
+                            <p class = "text-[#9c9c9c] text-[14px]">Đăng {{ $post->date_difference }}</p>
                         </div>
                     </div>
                 </a>
 
-                <div class="col-span-3 flex items-center justify-between gap-3">
+                <div class="col-span-3 flex items-center justify-between gap-4">
                     <button type="button" data-url = "{{ route('show-phone-number') }}" data-post-id = "{{ $post->id }}"
-                    class="show-phone-number flex items-center justify-center gap-3 text-base px-5 py-2.5 border border-[#00C1C1] w-full sm:w-auto text-white text-base text-bold rounded-lg bg-[#00C1C1] hover:bg-[#00e0e0]">
+                    class="show-phone-number flex items-center justify-center gap-3 text-base px-4 py-2 border border-[#00C1C1] w-full sm:w-auto text-white text-base text-bold rounded-lg bg-[#00C1C1] hover:bg-[#00e0e0]">
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M14.4999 6.5C15.2371 6.64382 15.9689 6.96892 16.4999 7.5C17.031 8.03108 17.3561 8.76284 17.4999 9.5M14.9999 3C16.5315 3.17014 17.9096 3.91107 18.9999 5C20.0902 6.08893 20.8279 7.46869 20.9999 9M20.9994 16.4767V19.1864C21.0036 20.2223 20.0722 21.0873 19.0264 20.9929C10 21 3 13.935 3.00706 4.96919C2.91287 3.92895 3.77358 3.00106 4.80811 3.00009H7.52325C7.96247 2.99577 8.38828 3.151 8.72131 3.43684C9.66813 4.24949 10.2771 7.00777 10.0428 8.10428C9.85987 8.96036 8.9969 9.55929 8.41019 10.1448C9.69858 12.4062 11.5746 14.2785 13.8405 15.5644C14.4272 14.9788 15.0273 14.1176 15.8851 13.935C16.9855 13.7008 19.7615 14.3106 20.5709 15.264C20.8579 15.6021 21.0104 16.0337 20.9994 16.4767Z" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>
@@ -119,7 +119,7 @@
                         Hiện số
                     </button>
                     <button type="button" data-url="{{ route('posts.add-to-favorite') }}"  data-post-id="{{ $post->id }}"
-                    class="add-to-favorite flex items-center rounded-lg border p-2.5 hover:bg-red-300" >
+                    class="add-to-favorite flex items-center rounded-lg border p-2 hover:bg-red-300" >
                         <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                             <path d="M4.3314 12.0474L12 20L19.6686 12.0474C20.5211 11.1633 21 9.96429 21 8.71405C21 6.11055 18.9648 4 16.4543 4C15.2487 4 14.0925 4.49666 13.24 5.38071L12 6.66667L10.76 5.38071C9.90749 4.49666 8.75128 4 7.54569 4C5.03517 4 3 6.11055 3 8.71405C3 9.96429 3.47892 11.1633 4.3314 12.0474Z" stroke="#001A72" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
                         </svg>

@@ -2,9 +2,9 @@
 <div class=" flex flex-col w-full ">
     <div class="relative inline-block text-left">
         <button  type="button" 
-        class="dropdown-toggle flex  {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white p-3' : 'flex-col justify-start text-sm border-r text-gray-900 px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-50 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+        class="dropdown-toggle flex  {{ ($style == 0) ? 'border rounded-lg border-white text-white p-2' : 'flex-col justify-start border-r text-gray-900 px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-50 hover:text-gray-900">
         <span class="block flex justify-between items-center w-full">
-            <span class="flex items-center whitespace-nowrap {{ ($style == 0) ? 'show-area-range' : '' }}">
+            <span class="flex items-center whitespace-nowrap {{ ($style == 0) ? 'show-area-range text-base' : 'text-[13px]' }}">
                 Diện tích
             </span>
             <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,14 +12,14 @@
             </svg>
         </span>
             @if($style != 0)
-                <span class="show-area-range overflow-hidden line-clamp-1 text-base">
+                <span class="show-area-range overflow-hidden line-clamp-1 text-[14px]">
                     {{ (request('area-range')) ? request('area-range') : 'Tất cả' }}
                 </span>
             @endif
         </button>
 
         <div class="dropdown-box hidden w-80 {{ $style === 0 ? 'mt-2' : 'mt-4' }} absolute z-10 bg-white rounded-lg shadow-lg shadow-lg ">
-            <div class="flex flex-col gap-5 text-base">
+            <div class="flex flex-col gap-5 text-sm">
                 <div class="h-80 overflow-y-auto">
                     <ul class="my-4">
                         @foreach (config('filter_params.area') as $index => $param)
@@ -36,7 +36,7 @@
             </div>
             <div class="flex justify-between items-center p-4 border-t w-full">
                 <button type="{{ $style === 0 ? 'button' : 'submit' }}" data-style="{{ $style }}" 
-                class="reset-area-range w-full flex items-center justify-center gap-3 text-base text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-lg px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+                class="reset-area-range w-full flex items-center justify-center gap-3 text-sm text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 rounded-lg px-5 py-2.5 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                         <path
                             d="M18 20L17.6464 20.3536L18 20.7071L18.3536 20.3536L18 20ZM13 4.5C12.7239 4.5 12.5 4.72386 12.5 5C12.5 5.27614 12.7239 5.5 13 5.5L13 4.5ZM13.6464 16.3536L17.6464 20.3536L18.3536 19.6464L14.3536 15.6464L13.6464 16.3536ZM18.3536 20.3536L22.3536 16.3536L21.6464 15.6464L17.6464 19.6464L18.3536 20.3536ZM18.5 20L18.5 9L17.5 9L17.5 20L18.5 20ZM14 4.5L13 4.5L13 5.5L14 5.5L14 4.5ZM18.5 9C18.5 6.51472 16.4853 4.5 14 4.5L14 5.5C15.933 5.5 17.5 7.067 17.5 9L18.5 9Z"

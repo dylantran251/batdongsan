@@ -6,7 +6,7 @@
         position: absolute;
         background: transparent;
         border: 1px solid #868686;
-        left: -4%;
+        left: -5%;
         top: 50%;
     }
     .slider-posts-home-page .splide__arrow--next{
@@ -16,7 +16,7 @@
         position: absolute;
         border: 1px solid #868686;
         top: 50%;
-        right: -4%;
+        right: -5%;
     }
 
     .red-line:before {
@@ -26,7 +26,7 @@
         top: 0;
         z-index: 1;
         left: 0%;
-        width: 8%;
+        width: 9%;
         height: 100%;
         border-color: red;
         border-top-width: 10px;
@@ -37,7 +37,7 @@
         display: block;
         position: absolute;
         top: 0;
-        left: 8%;
+        left: 9%;
         width: 92%;
         height: 1px;
         z-index: 1;
@@ -48,12 +48,12 @@
 </style>
 @isset($data)
     @foreach($data as $item)
-        <div class="bg-list-post pt-16 bg-[#F6F6F6] ">
-            <div class="mx-5 xl:container xl:mx-auto xl:px-20">
-                <div class="relative pb-8 w-full">
-                    <h1 class="text-xl md:text-[25px] text-black font-bold mb-8" >{{ $item['category']->name }}</h1>
+        <div class="bg-list-post pt-[3.6em] bg-[#F6F6F6] mb-3">
+            <div class="max-w-[1200px] mx-auto">
+                <div class="relative pb-9 w-full">
+                    <h1 class="text-[25px] text-black font-bold mb-7" >{{ $item['category']->name }}</h1>
                     {{-- Slider list post card --}}
-                    <div class="slider-posts-home-page splide w-full bg-white rounded-lg shadow py-8 px-6 border" role="group">
+                    <div class="slider-posts-home-page splide w-full bg-white rounded-lg p-6 border" role="group">
                         <div class="splide__track w-full">
                             <ul class="splide__list grid grid-cols-4">
                                 {{-- Slider --}}
@@ -63,14 +63,14 @@
                     </div>
                 </div>
                 {{-- List cart post --}}
-                <div class="flex flex-col">
+                <div class="flex flex-col mb-8">
                     @include('frontend.pages.home.components.card_post')
                     <div id="{{'list-more-post-container-'.$item['category']->id}}">
                     </div>
                 </div>
-                <div class="text-center py-10">
+                <div class="text-center pb-10">
                     <button data-category-id ="{{ $item['category']->id }}" data-category-name="{{ $item['category']->name }}" data-url = {{ route('load-more-posts') }} data-check = "false" type="button" 
-                        class="load-more-posts rounded bg-white py-3 px-16 border border-[#DC2D27] text-[#DC2D27] uppercase hover:text-white hover:bg-[#DC2D27]  text-centerdark:border-red-500 dark:text-red-500 dark:hover:text-white dark:hover:bg-red-600 dark:focus:ring-red-900" >
+                        class="load-more-posts rounded bg-white py-2.5 px-[4.25rem] border border-[#DC2D27] text-[#DC2D27] uppercase hover:text-white hover:bg-[#DC2D27] text-center">
                         Xem thêm các tin khác
                     </button>
                 </div>
@@ -86,7 +86,7 @@
                     type: 'loop',
                     perPage: 4,
                     perMove: 1,
-                    gap: 20,
+                    gap: 21,
                     padding: 0,
                     pagination: false,
                     breakpoints: {

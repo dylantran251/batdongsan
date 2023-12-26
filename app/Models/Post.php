@@ -51,23 +51,38 @@ class Post extends Model
     protected $appends = [
         'location',
         'created_date',
+        'expired_date',
         'currency_format',
+        'sub_currency_format',
         'regular_price',
         'actions',
         'area_format',
-        'date_difference'
+        'date_difference',
+        'vip_text',
+        'avatar',
     ];
 
     protected $casts = [
         'images' => 'array',
         'other_properties' => 'array',
         'price' => 'float',
+        'expired_at' => 'date',
     ];
 
-
+    public function getAvatarAttribute(){
+        $images = json_decode($this->images);
+        if($images[0] !== null){
+            return url('uploads/'.$images[0]);
+        }
+        return url('uploads/default.jpg');
+    }
 
     public function getCreatedDateAttribute(){
         return ($this->created_at)->format('d-m-Y');
+    }
+
+    public function getExpiredDateAttribute(){
+        return ($this->expired_at)->format('d-m-Y');
     }
 
     public function getDateDifferenceAttribute(){
@@ -80,9 +95,10 @@ class Post extends Model
         return $result;
     }
 
-    public function getRegularPriceAttribute(): string
+    public function getSubCurrencyFormatAttribute(): string
     {
-        return Helper::formatStringVNDAmount($this->price);
+        $result = Helper::formatCurrencyVND($this->sub_price);
+        return $result;
     }
 
     public function getAreaFormatAttribute(): string
@@ -124,6 +140,17 @@ class Post extends Model
         return "";
     }
 
+    public function getVipTextAttribute(){
+        if($this->vip === 1){
+            return 'Tin VIP bạc';
+        }else if($this->vip === 2){
+            return 'Tin VIP vàng';
+        }else if($this->vip === 3){
+            return 'VIP kim cương';
+        }
+        return 'Tin thường';
+    }
+
     public function category()
     {
         return $this->belongsTo(Category::class, 'category_id');
@@ -144,8 +171,8 @@ class Post extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-    public function viewedByUsers(){
-        return $this->belongsToMany(User::class, 'post_viewed','post_id' , 'user_id')->withTimestamps();
+    public function viewed(){
+        return $this->morphByMany(User::class, 'viewable');
     }
 
     public function favoriteByUsers(){
@@ -168,72 +195,6 @@ class Post extends Model
         return $this->belongsTo(Ward::class, 'ward_id');
     }
 
-    public function getDate(){
-        return ($this->created_at)->format('d-m-Y');
-    }
-
-    public function getVip(){
-        if($this->vip === 1){
-            return 'Tin VIP bạc';
-        }else if($this->vip === 2){
-            return 'Tin VIP vàng';
-        }else if($this->vip === 3){
-            return 'Tin VIP kim cương';
-        }
-        return 'Tin thường';
-    }
-
-    public function dateDifference (){
-        $now = Carbon::now();
-        if($this->created_at === null){
-            $this->created_at = Carbon::now();
-        }
-        $dateToCompare = $this->created_at->format('Y-m-d');
-        $diffInDays = $now->diffInDays($dateToCompare);
-        if ($diffInDays === 0) {
-            return 'hôm nay';
-        } elseif ($diffInDays === 1) {
-            return 'hôm qua';
-        } else {
-            if ($diffInDays >= 30) {
-                // Nếu số ngày lớn hơn hoặc bằng 30, tính số tháng
-                $diffInMonths = $now->diffInMonths($dateToCompare);
-                if ($diffInMonths >= 12) {
-                    // Nếu số tháng lớn hơn hoặc bằng 12, tính số năm
-                    $diffInYears = floor($diffInMonths / 12);
-                    return $diffInYears . ' năm' . ' trước';
-                } else {
-                    return $diffInMonths . ' tháng' . ' trước';
-                }
-            } else {
-                return $diffInDays . ' ngày' . ' trước';
-            }
-        }
-    }
-
-    protected function shorten($number){
-        $numberLength = strlen($number);
-        if($numberLength >= 10 && $number/1000000000 >= 1){
-            return round($number/1000000000, 2). ' tỷ';
-        }elseif($numberLength < 10 && $numberLength >=7 && $number/1000000 >= 1){
-            return round($number/1000000, 1). ' triệu';
-        }elseif($numberLength < 7 && $numberLength>=4 && $number/1000 >= 1){
-            return round($number/1000, 0). ' nghìn';
-        }
-        return 0;
-    }
-
-    public function shortenSubPrice(){
-        $area = floatval($this->area);
-        $price = floatval($this->price);
-        $subPrice = round($price/$area);
-        return $this->shorten($subPrice);
-    }
-
-    public function formatArea(){
-        return round($this->area);
-    }
-
     public function getImages(){
         if (is_string($this->images)) {
             $images = json_decode($this->images);
@@ -252,9 +213,4 @@ class Post extends Model
         }
         return ''; 
     }
-
-    public function getOtherProperties(){
-        return json_decode($this->other_properties);
-    }
-
 }

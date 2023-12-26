@@ -72,14 +72,12 @@ class News extends Model
         return $this->belongsTo(User::class, 'user_id', 'id');
     }
 
-    // public function tags(): MorphToMany
-    // {
-    //     return $this->morphToMany(Tag::class, 'related', 'tags_relationships', 'related_id', 'tag_id');
-    // }
-
-    
     public function tags(): MorphToMany
     {
         return $this->morphToMany(Tag::class, 'taggable');
+    }
+
+    public function viewed(){
+        return $this->morphByMany(User::class, 'viewable');
     }
 }

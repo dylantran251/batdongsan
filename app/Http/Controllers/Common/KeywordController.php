@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class KeywordController extends Controller
 {
     public function dataKeywordByCategory(){
-        $categories = Category::where('type', 1)->where('parent_id', 0)->get();
+        $categories = Category::where('type', 1)->where('parent_id', 0)->take(3)->get();
         $data = [];
         foreach($categories as $category){
             $keywords = $category->posts()->with('keywords')->get()

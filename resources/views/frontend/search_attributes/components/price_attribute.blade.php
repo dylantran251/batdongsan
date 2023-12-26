@@ -2,9 +2,9 @@
     <div class="relative inline-block text-left">
 
             <button type="button" 
-            class="dropdown-toggle flex {{ ($style == 0) ? 'text-base border rounded-lg border-white text-white p-3' : 'flex-col justify-start text-sm border-r px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-100 hover:text-gray-900 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">
+            class="dropdown-toggle flex {{ ($style == 0) ? 'border rounded-lg border-white text-white p-2' : 'flex-col justify-start border-r px-3' }} z-[0] w-full focus:outline-none hover:bg-gray-100 hover:text-gray-900 ">
                 <span class="flex justify-between items-center w-full">
-                    <span class="flex items-center whitespace-nowrap {{ ($style == 0) ? 'show-price-range' : '' }}">
+                    <span class="flex items-center whitespace-nowrap {{ ($style == 0) ? 'show-price-range text-base' : 'text-[13px]'}}">
                         Mức giá
                     </span>
                     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -12,16 +12,16 @@
                     </svg>
                 </span>
                 @if($style != 0)
-                    <span class="show-price-range overflow-hidden line-clamp-1 text-base">
+                    <span class="show-price-range overflow-hidden line-clamp-1 text-sm">
                         {{ (request('price-range')) ? request('price-range') : 'Tất cả' }}
                     </span>
                 @endif
             </button>
         <div class="dropdown-box hidden w-80 {{ $style === 0 ? 'mt-2' : 'mt-4' }} absolute z-[1000] bg-white rounded-lg shadow-lg">
             <div class="">
-                <div class="flex flex-col gap-5 text-base">
+                <div class="flex flex-col gap-5 text-sm">
                     <div class="h-80 overflow-y-auto">
-                        <ul class="price-filter text-base my-4">
+                        <ul class="price-filter my-4">
                             @foreach(config('filter_params.price') as $index => $param)
                                 <li class="hover:bg-gray-100 w-full py-2 px-6 
                                 {{ ( (request('price-range') && request('price-range') === $param['text']) || 

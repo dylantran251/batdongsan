@@ -4,11 +4,11 @@
     <div class="flex items-center gap-8 py-5 text-[14px]">
         <div class="flex flex-col ">
             <p style="color: #868686;">Ngày đăng</p>
-            <p style="color: #2c2c2c;">{{ $post->getDate() }}</p>
+            <p style="color: #2c2c2c;">{{ $post->created_date }}</p>
         </div>
         <div class="flex flex-col ">
             <p style="color: #868686;">Ngày hết hạn</p>
-            <p style="color: #2c2c2c;">cooming soon...</p>
+            <p style="color: #2c2c2c;">{{ $post->expired_date }}</p>
         </div>
         <div class="flex flex-col ">
             <p style="color: #868686;">Loại tin</p>

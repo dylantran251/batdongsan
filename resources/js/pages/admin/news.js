@@ -100,6 +100,7 @@ function store(){
                 },
                 method: $('#create-news-page form').attr('method'),
                 success: function(response){
+                    fireToast('success', 'Đã tạo', response.message);
                     window.location.href = response.url;
                 },
                 error: function(message){
@@ -172,6 +173,7 @@ function destroy(table){
             },
             success: function(response){
                 fireToast('success', 'Đã xóa',  response.message)
+                // $('#delete-modal').removeClass('show');
                 table.replaceData();
             },
             error: function(message){

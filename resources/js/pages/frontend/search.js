@@ -28,7 +28,7 @@ function onChooseAreaRange(){
         }else if($('input[name="area-range"]').length && text === 'Tất cả'){
             $('input[name="area-range"]').remove();
         }else if(!($('input[name="area-range"]').length) && text !== 'Tất cả'){
-            $('.form-search').append(`<input type="text" id="area-range" name="area-range" value="${text}">`);
+            $('.form-search').append(`<input type="hidden" id="area-range" name="area-range" value="${text}">`);
         }
         if($('#page .form-search').length ){
             $('#page .form-search').trigger('submit');
@@ -51,7 +51,7 @@ function onChoosePriceRange(){
         }else if($('input[name="price-range"]').length && text !== 'Tất cả'){
             $('input[name="price-range"]').val(text);
         }else if(!($('input[name="price-range"]').length) && text !== 'Tất cả' ){
-            $('.form-search').append(`<input type="text" id="price-range" name="price-range" value="${text}">`);
+            $('.form-search').append(`<input type="hidden" id="price-range" name="price-range" value="${text}">`);
         }
         if($('#page .form-search').length > 0){
             $('#page .form-search').trigger('submit');
@@ -71,7 +71,7 @@ function onChooseMore(){
             let number = $(this).attr("data-number");
             $(this).toggleClass('bg-[#FFD8C2] text-[#74150F] choosed');
             if ($(this).hasClass('choosed')) {
-                $('.form-search').append(`<input type="text" class="${attribute}" name="${attribute}[]" value="${number}">`);
+                $('.form-search').append(`<input type="hidden" class="${attribute}" name="${attribute}[]" value="${number}">`);
             } else {
                 $(`input[name="${attribute}[]"]`).filter(function() {
                     return $(this).val() === number;
@@ -93,7 +93,7 @@ function onChooseSortBy(){
                 $('input[name="sort_by"]').val($(this).val());
             }else{
                 let value = $(this).val()
-                $('#page .form-search').append(`<input type="text" class="sort-by" name="sort_by" value="${value}">`)
+                $('#page .form-search').append(`<input type="hidden" class="sort-by" name="sort_by" value="${value}">`)
             }
         }else{
             if($('input[name="sort_by"]').length > 0){

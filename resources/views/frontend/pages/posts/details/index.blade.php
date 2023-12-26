@@ -39,9 +39,9 @@
 </style>
 <div id="post-details">
     @include('frontend.pages.posts.details.components.search_bar')
-    <div class="bg-gray-50 pb-20">
-        <div class="mx-5 xl:container xl:mx-auto xl:px-20">
-            <div class="grid grid-cols-1 xl:grid-cols-12  gap-8">
+    <div class="bg-gray-50 pb-20 pt-10">
+        <div class="max-w-[1200px] mx-auto">
+            <div class="grid grid-cols-1 xl:grid-cols-12 gap-8">
                 <div class="xl:col-span-9">
                     @include('frontend.pages.posts.details.components.image_gallery')
                     @include('frontend.pages.posts.details.components.info_posts')

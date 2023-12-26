@@ -29,9 +29,7 @@ function dataTable(){
                 
                     // Create HTML content with combined name and image
                     var htmlContent = '<div style="display: flex; align-items: center;">';
-
                     htmlContent += `<img src="${rowData.photo_url}"  alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; margin-right: 10px; object-fit: cover;">`;
-                    
                     htmlContent += '<span>' + rowData.name + '</span>';
                     htmlContent += '</div>';
                 
@@ -48,8 +46,6 @@ function dataTable(){
         },
     });
     
-
-    
     table.on('dataProcessed', function () {
         // buildEditFnc()
         getItem()
@@ -61,8 +57,6 @@ function dataTable(){
             e.preventDefault();
             $('#delete-modal').addClass('modal-delete-user');
             $('.modal-delete-user #delete-form').attr('data-url', $(this).attr('data-url'));
-            $("#crud-user-modal form").find('.password-container').remove();
-            $("#crud-user-modal form").find('.password_confirmation-container').remove();
             destroy(table)
         })
     })
@@ -82,6 +76,7 @@ function destroy(table){
             },
             success: function(response){
                 fireToast('success', 'Đã xóa',  response.message)
+                // $('#delete-modal').removeClass('show');
                 table.replaceData();
             },
             error: function(message){
@@ -107,6 +102,7 @@ function store(table){
                 .then(function (response) {
                     fireToast('success', "Thành công", response.data.message)
                     table.replaceData()
+                    // $('#crud-user-modal').removeClass('show');
                     form.attr('action', $('#crud-user-modal .submit-form').attr('data-url-store'));
                     form.find('input:not([type="hidden"])').each(function () {
                         $(this).val("");
@@ -137,8 +133,8 @@ function getItem(){
                 modalContainer.find('input[name="email"]').attr('readonly', true);
                 modalContainer.find('input[name="phone"]').val(item.phone)
                 modalContainer.find('select[name="role_id"]').val(item.role_id);
-                modalContainer.find('.password-container').remove();
-                modalContainer.find('.password_confirmation-container').remove();
+                $('.password-container').remove();
+                $('.password_confirmation-container').remove();
                 modalContainer.attr('action', button.attr('data-update-url'))
                 modalContainer.attr('method', "PUT")
             },
@@ -152,8 +148,16 @@ function getItem(){
 function create(){
     $('#users-management-page .create').on('click', function(e){
         e.preventDefault();
-        if($('.password-container').length === 0){
-            $('.modal-body').append(`<div class="col-span-12 sm:col-span-6 password-container">
+        let modalContainer = $("#crud-user-modal form");
+        modalContainer.find('input[name="email"]').attr('readonly', false);
+        modalContainer.find('input[name="name"]').val('')
+        modalContainer.find('input[name="email"]').val('')
+        modalContainer.find('input[name="phone"]').val('')
+        modalContainer.find('select[name="role_id"]').val(1);
+        modalContainer.attr('method', "POST")
+        modalContainer.attr('action', $(this).attr('data-url'))
+        if(!$('#crud-user-modal .password-container').length){
+            $('#crud-user-modal .modal-body').append(`<div class="col-span-12 sm:col-span-6 password-container">
                                         <label for="password" class="form-label">Mật khẩu</label>
                                         <input type="password" id="password" name="password" class="form-control"  placeholder="1234@">
                                     </div>

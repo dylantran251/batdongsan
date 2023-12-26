@@ -24,10 +24,10 @@ class FrontendController extends Controller
             // get 12 province and posts by this
             
             // 
-            $menus = Category::where('parent_id', 0)->get();
+            $fiveMenus = Category::where('parent_id', 0)->take(5)->get();
             // 
-            $categoryPosts = $menus->where('type', 1);
-            $category = $menus->where('name', $category_name)->first();
+            $categoriesPost = $fiveMenus->where('type', 1);
+            $category = $fiveMenus->where('name', $category_name)->first();
             $realEstateTypes = Category::where('parent_id', '<', 0)->orWhere('parent_id', $category->id)->where('type', 1)->get();
 
             $locationController = new LocationController();
@@ -39,9 +39,9 @@ class FrontendController extends Controller
             $posts = $posts->paginate(8);
 
             if($category->type === 0){
-                return view('frontend.pages.news.index', compact('posts', 'title', 'postsCount', 'category', 'dataPostsByProvince', 'realEstateTypes', 'menus', 'dataKeywordByCategory', 'categoryPosts'));
+                return view('frontend.pages.news.index', compact('posts', 'title', 'postsCount', 'category', 'dataPostsByProvince', 'realEstateTypes', 'fiveMenus', 'dataKeywordByCategory', 'categoriesPost'));
             }
-            return view('frontend.pages.page.index', compact('posts', 'title', 'postsCount', 'category', 'dataPostsByProvince', 'realEstateTypes', 'menus', 'dataKeywordByCategory', 'categoryPosts'));
+            return view('frontend.pages.page.index', compact('posts', 'title', 'postsCount', 'category', 'dataPostsByProvince', 'realEstateTypes', 'fiveMenus', 'dataKeywordByCategory', 'categoriesPost'));
         }catch(Exception $exception){
             return Response::json(['message' => $exception->getMessage()], 500);
         }        
@@ -50,9 +50,9 @@ class FrontendController extends Controller
     public function searchPosts(Request $request, $category_name){
         $keywordController = new KeywordController();
         $dataKeywordByCategory = $keywordController->dataKeywordByCategory();
-        $menus = Category::where('parent_id', 0)->get();
-        $categoryPosts = $menus->where('type', 1);
-        $category = $menus->where('name', $category_name)->first();
+        $fiveMenus = Category::where('parent_id', 0)->take(5)->get();
+        $categoriesPost = $fiveMenus->where('type', 1);
+        $category = $fiveMenus->where('name', $category_name)->first();
         $data = $request->all();
         // 
         $locationController = new LocationController();
@@ -155,7 +155,7 @@ class FrontendController extends Controller
         if($check_request === true){
             // session(['dataAttributesSearch' => $data]);
             toastr()->info('Tìm thấy '.$postsCount.' bài đăng.', 'Thông báo');
-            return view('frontend.pages.page.index', compact('posts', 'title', 'postsCount', 'category', 'dataPostsByProvince', 'realEstateTypes', 'menus', 'dataKeywordByCategory', 'categoryPosts'));
+            return view('frontend.pages.page.index', compact('posts', 'title', 'postsCount', 'category', 'dataPostsByProvince', 'realEstateTypes', 'fiveMenus', 'dataKeywordByCategory', 'categoriesPost'));
         }
         else{
             return redirect()->route('loadPage', compact('category_name'));

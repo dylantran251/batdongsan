@@ -32,6 +32,6 @@
                 {{ $item->ward->name .', '. $item->district->name .', '. $item->province->name }}
             </span>
         </p>
-        <p class="mb-3" style="color: #868686;">{{ $item->getDateDifferenceAttribute() }}</p>
+        <p class="mb-3" style="color: #868686;">{{ $item->date_difference }}</p>
     </div>    
 </li>

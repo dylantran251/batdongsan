@@ -47,7 +47,7 @@ export function onChangeSetLocation(province, district, ward) {
     if ($('input[name="location"]').length > 0) {
         $('input[name="location"]').val(location);
     }else{
-        $('.form-search').append(`<input type="text" id="location" name="location" value="${location}">`);
+        $('.form-search').append(`<input type="hidden" id="location" name="location" value="${location}">`);
     }
     if($('.show-location')){
         $('.show-location').text(location);

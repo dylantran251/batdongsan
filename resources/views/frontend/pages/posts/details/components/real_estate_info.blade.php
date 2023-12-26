@@ -30,7 +30,7 @@
                     Diện tích
                 </div>
                 <div class="col-span-1 text-center">
-                    {{ $post->formatArea() }} m&#178;
+                    {{ $post->area_format }} 
                 </div>
             </div>
             <hr>

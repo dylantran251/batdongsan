@@ -13,7 +13,7 @@
 @endpush
 @section('subcontent')
     <div id="create-post-page" class="w-full bg-gray-50 ">
-        <div class="pt-6 mx-5 xl:container xl:mx-auto xl:px-20 mb-16">
+        <div class="pt-6 mx-[350px] mb-16">
             <div class="text-[#D7D7D7] text-[14px]">
                 <p>Trang chủ/<span class="text-black">{{ $title }}</span> </p>
             </div>

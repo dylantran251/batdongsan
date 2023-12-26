@@ -9,7 +9,7 @@ function onChooseKeyword(){
         if($('input[name="keyword"]').length){
             $('input[name="keyword"]').val(tag_name);
         }else{
-            $('.form-search').append(`<input type="text" value="${tag_name}" name="keyword"> `)
+            $('.form-search').append(`<input type="hidden" value="${tag_name}" name="keyword"> `)
         }
         $('.form-search').trigger('submit');
     })

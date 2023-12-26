@@ -58,6 +58,7 @@ function getItem(){
                 $('input[name = "name"]').val(data.name);
                 $(`select[name="parent"] option[value="${data.parent_id}"]`).prop('selected', true);
                 $(`select[name="parent"] option[value="${data.id}"]`).prop('disabled', true);
+                $(`select[name="type"] option[value="${data.type}"]`).prop('selected', true);
                 if($('#category-form .cancel-submit').length === 0){
                     $('.submit-form').before('<button type="button" class="cancel-submit text-gray-900 focus:outline-none hover:bg-gray-100 focus:ring-4 focus:ring-gray-200 font-medium rounded-lg text-base px-5 py-2.5 me-2 dark:bg-gray-800 dark:text-white dark:border-gray-600 dark:hover:bg-gray-700 dark:hover:border-gray-600 dark:focus:ring-gray-700">Hủy</button>')
                     onCancel()
@@ -84,6 +85,7 @@ function formData(){
     let category = {};
     category['name'] = $('input[name="name"]').val();
     category['parent_id'] = $('select[name="parent"]').val();
+    category['type'] = $('select[name="type"]').val();
     return category;
 }
 
@@ -130,6 +132,7 @@ function destroy(table){
             },
             success: function(response){
                 fireToast('success', 'Đã xóa',  response.message)
+                // $('#delete-modal').removeClass('show');
                 table.replaceData();
             },
             error: function(message){
@@ -192,6 +195,7 @@ function resetValue(){
     if($('#category-form .cancel-submit').length){
         $('#category-form .cancel-submit').remove();
     }
+    $('select[name="type"]').val(1); 
     $('.submit-form').text('Tạo mới')
     $('#category-form').attr('data-url', $('#category-form .submit-form').attr('data-store-url'));
     $('#category-form').attr('data-method', "POST");

@@ -13,20 +13,19 @@
 @font-face {
     font-family: 'SVN-Gotham';
     src: url('../fonts/SVN-Gotham/SVN-Gotham\ Book.otf');
-    font-weight:normal;
+    font-weight: normal;
 }
 
-@font-face {
+/* @font-face {
     font-family: 'SVN-Gotham Black';
     src: url('../font/SVN-Gotham/SVN-Gotham\ Black.otf');
-
+    font-weight: 500;
 }
-/*  */
 
 @font-face {
     font-family: 'SVN-Gotham';
     src: url('../fonts/SVN-Gotham/SVN-Gotham\ Bold.otf');
-    font-weight: 900;
+   
 }
 
 @font-face {
@@ -40,4 +39,4 @@
 @font-face {
     font-family: 'SVN-Gotham Black';
     src: url('../font/SVN-Gotham/SVN-Gotham\ Black.otf');
-}
+} */

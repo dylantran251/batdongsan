@@ -54,7 +54,7 @@
                     Trang chủ
                 </a>
             </li>
-            @foreach($menus as $menu)
+            @foreach($fiveMenus as $menu)
                 <li class="py-3 px-6 w-full hover:bg-gray-200">
                     <a href="{{route('loadPage', ['category_name' => $menu['name']] )}}" class="flex items-center gap-4" aria-current="page">
                         <svg height="24" width="26" viewBox="0 0 576 512">

@@ -20,10 +20,12 @@ class HomeController extends Controller
     public function index(){
         $title = 'Tin nhà đất chính chủ';
 
-        $menus = Category::where('parent_id', 0)->get();
-        $categoryPosts  = $menus->where('type', 1);
-        $realEstateTypes = Category::where('parent_id', 1)->orWhere('parent_id', '<' , 0)->where('type', 1)->get();
-        $defaulCategory = $menus->first();
+        $fiveMenus = Category::where('parent_id', 0)->take(5)->get();
+        $defaulCategory = $fiveMenus->first();
+
+        $categoriesPost  = $fiveMenus->where('type', 1);
+        $realEstateTypes = Category::where('parent_id', 1)->where('type', 1)->get();
+       
 
         $data = [];
 
@@ -34,7 +36,8 @@ class HomeController extends Controller
         $news = News::orderByDesc('created_at')->get();
         $firstNews = $news->first();
         $nextNews = $news->skip(1)->take(3);
-        foreach($categoryPosts as $category){
+
+        foreach($categoriesPost->take(2) as $category){
             $posts = $category->posts()->orderByDesc('created_at')->get();
             $postsCount = $posts->count();
             $sliderPosts = [];
@@ -52,7 +55,7 @@ class HomeController extends Controller
                 'listPosts' => $listPosts,
             ];
         }
-        return view('frontend.pages.home.index', compact('data', 'nextNews', 'firstNews','title', 'realEstateTypes', 'defaulCategory', 'menus', 'categoryPosts', 'dataKeywordByCategory'));
+        return view('frontend.pages.home.index', compact('data', 'nextNews', 'firstNews','title', 'realEstateTypes', 'defaulCategory', 'fiveMenus', 'categoriesPost', 'dataKeywordByCategory'));
     }
 
     public function loadMorePosts(Request $request){

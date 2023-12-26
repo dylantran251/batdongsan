@@ -8,8 +8,8 @@
     <div id="users-management-page">
         <div class="intro-y flex flex-col sm:flex-row items-center mt-8" data-page="admin-post">
             <h2 style="font-size: 25px;" class="font-bold mr-auto text-upcase">{{ $title }}</h2>
-            <div class="create w-full sm:w-auto flex mt-4 sm:mt-0">
-                <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#crud-user-modal" class="btn btn-primary shadow-md mr-2">Thêm mới</a>
+            <div class=" w-full sm:w-auto flex mt-4 sm:mt-0">
+                <a href="javascript:;" data-tw-toggle="modal" data-tw-target="#crud-user-modal" data-url="{{ route('admin.users.store') }}" class="create btn btn-primary shadow-md mr-2">Thêm mới</a>
             </div>
         </div>
         <!-- BEGIN: Datatable -->

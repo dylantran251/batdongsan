@@ -1,5 +1,5 @@
 
-<div id="search" class="opacity-100 {{ $style == 0 ? 'lg:flex lg:justify-between lg:items-center gap-4 items-end text-white' : 'flex items-center w-full xl:w-3/5 text-[14px]' }}">
+<div id="search" class="opacity-100 {{ $style == 0 ? 'lg:flex lg:justify-between lg:items-center gap-3 items-end text-white' : 'col-span-6 flex justify-between items-center w-full text-[14px]' }}">
     {{-- Location filter attribute --}}
     @if ($style != 0)
         <div class="w-full border-r">
@@ -22,7 +22,7 @@
         @include('frontend.search_attributes.components.more_attribute', ['style' => $style])
     </div>
     {{--  --}}
-    <div class="w-fit h-full">
+    <div class="h-full py-2">
         @include('frontend.search_attributes.components.button_reset_attributes')
     </div>
 </div>
